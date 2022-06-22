@@ -1,5 +1,6 @@
 import 'package:e_barber_v2/auth/login.dart';
 import 'package:e_barber_v2/auth/register.dart';
+import 'package:e_barber_v2/views/barberman/logout.dart';
 import 'package:e_barber_v2/views/bottombar.dart';
 import 'package:e_barber_v2/views/main_menu.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Register());
       case '/home':
         return MaterialPageRoute(builder: (_) => BottomBar());
+      case '/logout-dialog':
+        return MaterialPageRoute(builder: (_) => Logout());
       default:
         return _errorRoute();
     }

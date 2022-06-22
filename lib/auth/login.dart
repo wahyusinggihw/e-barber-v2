@@ -28,20 +28,6 @@ class LoginState extends State<Login> {
     // final auth = AuthService();
 
     // var error = authProvider.errorCode;
-    var errorMessage;
-
-    var loginSuccess = SnackBar(
-      content: Text("Logged in as "),
-      duration: Duration(seconds: 2),
-    );
-    var loginFirst = SnackBar(
-      content: Text("Loggin First!"),
-      duration: Duration(seconds: 2),
-    );
-    var noUser = SnackBar(
-      content: Text("User tidak ada"),
-      duration: Duration(seconds: 1),
-    );
 
     // final email = TextFormField(
     //   controller: _emailController,
@@ -243,7 +229,9 @@ class LoginState extends State<Login> {
                             MaterialStateProperty.all(Colors.transparent)),
                     child: Text("Lupa Password?",
                         style: TextStyle(color: Colors.grey)),
-                    onPressed: () {},
+                    onPressed: () {
+                      authProvider.forgotPassword();
+                    },
                   ),
                 ],
               ),
@@ -267,13 +255,13 @@ class LoginState extends State<Login> {
                             password: _passwordController.text);
 
                         if (message!.contains('Success')) {
-                          Navigator.pushNamed(context, '/home');
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text('Signed in as ' +
                                   authProvider
                                       .getUser()!
                                       .displayName
                                       .toString())));
+                          Navigator.pushNamed(context, '/home');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(message),

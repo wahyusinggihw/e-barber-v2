@@ -12,23 +12,11 @@ class UserBarberman extends StatefulWidget {
 }
 
 class _UserBarbermanState extends State<UserBarberman> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthService>(context, listen: false);
-
-    Future signOut() async {
-      try {
-        // signIn();
-        await FirebaseAuth.instance.signOut();
-
-        Navigator.pushNamed(context, '/');
-      } on FirebaseAuthException catch (e) {
-        print("failed ${e.code}");
-        print(e.message);
-      }
-    }
 
     return ChangeNotifierProvider(
       create: (context) => AuthService(),
@@ -99,14 +87,7 @@ class _UserBarbermanState extends State<UserBarberman> {
                         padding: const EdgeInsets.only(top: 20),
                         child: TextButton(
                           onPressed: () {
-                            authProvider.logOut();
-                            Navigator.pushNamed(context, '/');
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text('Successfully logout from ' +
-                                    authProvider
-                                        .getUser()!
-                                        .displayName
-                                        .toString())));
+                            Navigator.pushNamed(context, '/logout-dialog');
                             // FirebaseAuth.instance
                             //     .authStateChanges()
                             //     .listen((User? user) {

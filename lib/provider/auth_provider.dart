@@ -70,8 +70,8 @@ class AuthService with ChangeNotifier {
   }
 
   Future forgotPassword() async {
-    await _auth.verifyPasswordResetCode('user-not-found');
-    notifyListeners();
+    // await _auth.verifyPasswordResetCode('user-not-found');
+    // notifyListeners();
   }
 
   // Future createUser(
