@@ -1,5 +1,8 @@
 // import 'package:e_barber/barberman/bottombar_barberman.dart';
+import 'package:e_barber_v2/provider/auth_provider.dart';
+import 'package:e_barber_v2/provider/barberman_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListPotongan extends StatefulWidget {
   const ListPotongan({Key? key}) : super(key: key);
@@ -11,29 +14,26 @@ class ListPotongan extends StatefulWidget {
 class _ListPotonganState extends State<ListPotongan> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.only(left: 50, right: 50, top: 25),
-          children: <Widget>[
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: const Text(
-                      "Barbershop 1",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
-                    ),
+    // final crudModelRambut = Provider.of<ModelRambut>(context, listen: false);
+
+    return ChangeNotifierProvider(
+      create: (context) => ModelRambut(),
+      // builder: (context, child``),
+      child: Scaffold(
+        body: Center(
+          child: ListView(
+            padding: const EdgeInsets.only(left: 50, right: 50, top: 25),
+            children: <Widget>[
+              Center(
+                child: Provider<ModelRambut>(
+                  create: (context) => ModelRambut(),
+                  child: Column(
+                    children: [Text("1"), Text("1"), Text("1")],
                   ),
-                  Column(
-                    children: [],
-                  )
-                ],
-              ),
-            )
-          ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

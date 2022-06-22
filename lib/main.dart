@@ -13,6 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
+    // MyApp(),
     ChangeNotifierProvider(
       create: (context) => AuthService(),
       child: MyApp(),

@@ -22,11 +22,13 @@ class AuthService with ChangeNotifier {
     required String lastName,
     required String email,
     required String password,
+    required String roleId,
   }) async {
     try {
       var u = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       u.user!.updateDisplayName(firstName + ' ' + lastName);
+      u.user!.updatePhotoURL(roleId);
       return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

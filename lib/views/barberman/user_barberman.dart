@@ -81,6 +81,20 @@ class _UserBarbermanState extends State<UserBarberman> {
                             )
                           ],
                         ),
+                        Row(
+                          children: [
+                            Container(
+                              child: Text("Role"),
+                            ),
+                            Container(
+                              child: Text(":"),
+                            ),
+                            Container(
+                              child: Text(
+                                  authProvider.getUser()!.photoURL.toString()),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                     Container(

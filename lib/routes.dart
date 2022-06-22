@@ -1,5 +1,6 @@
 import 'package:e_barber_v2/auth/login.dart';
 import 'package:e_barber_v2/auth/register.dart';
+import 'package:e_barber_v2/views/barberman/jenispotongan_barberman.dart';
 import 'package:e_barber_v2/views/barberman/logout.dart';
 import 'package:e_barber_v2/views/bottombar.dart';
 import 'package:e_barber_v2/views/main_menu.dart';

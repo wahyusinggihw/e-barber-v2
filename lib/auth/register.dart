@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
   // final _loginKey = GlobalKey<_RegisterState>();
   final _formKey = GlobalKey<FormState>();
   var formData = FormData();
+  final TextEditingController _roleController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -130,12 +131,20 @@ class _RegisterState extends State<Register> {
       },
     );
 
-    Future signUp() async {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text.toString().trim(),
-          password: _passwordController.text.toString().trim());
-    }
-
+    final roleForm = Visibility(
+      visible: true,
+      child: TextFormField(
+        // controller: _roleController,
+        initialValue:
+            authValidation.role == 'barberman' ? 'barberman' : 'pelanggan',
+        validator: (value) {
+          if (value!.isNotEmpty) {
+            formData.role = value;
+          }
+          return null;
+        },
+      ),
+    );
     // final registerButton = Padding(
     //     padding: EdgeInsets.symmetric(vertical: 16),
     //     child: SizedBox(
@@ -235,6 +244,7 @@ class _RegisterState extends State<Register> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      roleForm,
                       firstName,
                       const SizedBox(height: 8),
                       lastName,
@@ -278,14 +288,14 @@ class _RegisterState extends State<Register> {
                         : "RegisterPelanggan",
                     backgroundColor: const Color(0xff20639B),
                     onPressed: () async {
-                      // authProvider.signUp(
-                      //     _emailController.text, _passwordController.text);
+                      // print(formData.role);
                       if (_formKey.currentState!.validate()) {
                         var message = await authProvider.signUp(
                             firstName: _firstNameController.text,
                             lastName: _lastNameController.text,
                             email: _emailController.text,
-                            password: _passwordController.text);
+                            password: _passwordController.text,
+                            roleId: formData.role);
                         if (message!.contains('Success')) {
                           Navigator.pushNamed(context, '/home');
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -298,19 +308,6 @@ class _RegisterState extends State<Register> {
                           ));
                         }
                       }
-                      // FirebaseAuth.instance
-                      //     .authStateChanges()
-                      //     .listen((User? user) {
-                      //   if (user != null) {
-                      //     print(user.uid);
-                      //   } else {}
-                      // });
-                      // if (_formKey.currentState!.validate()) {
-                      // Navigator.pushNamed(context, '/home');
-                      // simpanData.password = formData.password;
-                      // simpanData.confirmPassword = formData.confirmPassword;
-                      // }
-                      //
                     },
                     label: const Text("Register"),
                   ),

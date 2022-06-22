@@ -14,7 +14,8 @@ class simpanData {
       namaBelakang,
       email,
       password,
-      confirmPassword;
+      confirmPassword,
+      role;
 }
 
 class authValidation {
