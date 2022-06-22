@@ -1,18 +1,12 @@
-// import 'package:e_barber/auth_login.dart';
-// import 'package:e_barber/auth_register.dart';
-import 'package:e_barber_v2/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:e_barber_v2/models/models.dart';
 
-class AuthMain extends StatelessWidget {
-  const AuthMain({Key? key}) : super(key: key);
+class MainMenu extends StatelessWidget {
+  const MainMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white10,
-      ),
       body: Center(
           // margin: EdgeInsets.only(top: 40.0),
           child: Column(
@@ -21,9 +15,23 @@ class AuthMain extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: const EdgeInsets.only(bottom: 30),
-            child: const Text(
-              "E-Barber",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+            child: Column(
+              children: [
+                Text(
+                  "E - Barber",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Text(
+                    'Main Menu',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontStyle: FontStyle.italic,
+                        color: Color.fromARGB(255, 173, 166, 166)),
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -34,15 +42,15 @@ class AuthMain extends StatelessWidget {
                 child: FloatingActionButton.extended(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  heroTag: "register",
+                  heroTag: "mainmenu",
                   backgroundColor: const Color(0xff20639B),
                   onPressed: () {
                     // Route route = MaterialPageRoute(builder: (context) => const AuthRegister());
                     // Navigator.push(context, route);
-                    authValidation.action = 'register';
-                    Navigator.pushNamed(context, '/login-register');
+                    authValidation.role = 'barberman';
+                    Navigator.pushNamed(context, '/login-form');
                   },
-                  label: const Text("Register"),
+                  label: const Text("Barberman"),
                 ),
               )),
           Container(
@@ -55,10 +63,10 @@ class AuthMain extends StatelessWidget {
               heroTag: "Login",
               backgroundColor: const Color(0xff20639B),
               onPressed: () {
-                authValidation.action = 'login';
-                Navigator.pushNamed(context, '/login-register');
+                authValidation.role = 'pelanggan';
+                Navigator.pushNamed(context, '/login-form');
               },
-              label: const Text("Login"),
+              label: const Text("Pelanggan"),
             ),
           )),
         ],

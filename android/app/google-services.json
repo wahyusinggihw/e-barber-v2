@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "314865894708",
+    "project_id": "e-barber-4d52a",
+    "storage_bucket": "e-barber-4d52a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314865894708:android:00a8fd54b99bf329279161",
+        "android_client_info": {
+          "package_name": "com.undiksha.e_barber_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314865894708-2rr1unshuku1o8uqgmn4jv6g5vlphriv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.undiksha.e_barber_v2",
+            "certificate_hash": "e781d134bb43b6656c540ba067acd776797e4893"
+          }
+        },
+        {
+          "client_id": "314865894708-npb03n6fqv55789p304fpuone14cmsmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwDlHn2MIGzWNmwomF9PTqSyWXThEheoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314865894708-npb03n6fqv55789p304fpuone14cmsmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

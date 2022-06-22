@@ -1,5 +1,7 @@
 import 'package:e_barber_v2/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class _LoginFormState extends State<LoginForm> {
   final _loginKey = GlobalKey<_LoginFormState>();
   final _formKey = GlobalKey<FormState>();
   var formData = FormData();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
                 ? "LoginBarberman"
                 : "LoginPelanggan",
             backgroundColor: const Color(0xff20639B),
-            onPressed: () {
+            onPressed: () async {
               // if (_formKey.currentState!.validate()) {
               //   // simpanData.password = formData.password;
               //   // simpanData.confirmPassword = formData.confirmPassword;
@@ -78,8 +81,36 @@ class _LoginFormState extends State<LoginForm> {
               // } else {
               //   Navigator.pushNamed(context, '/home');
               // }
+              try {
+                UserCredential userCredential = await FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                        email: "barry.allen@example.com",
+                        password: "SuperSecretPassword!");
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'user-not-found') {
+                  print('No user found for that email.');
+                } else if (e.code == 'wrong-password') {
+                  print('Wrong password provided for that user.');
+                }
+              }
             },
             label: const Text("Login"),
+          ),
+        ));
+    final registerButton = Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: SizedBox(
+          width: 250,
+          height: 50,
+          child: FloatingActionButton.extended(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            heroTag: authValidation.role == 'barberman'
+                ? "LoginBarberman"
+                : "LoginPelanggan",
+            backgroundColor: const Color(0xff555C62),
+            onPressed: () async {},
+            label: const Text("Register"),
           ),
         ));
 
@@ -91,83 +122,96 @@ class _LoginFormState extends State<LoginForm> {
     );
 
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white10,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: Colors.black,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          // title: Text("<", style: TextStyle(color: Colors.black),),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white10,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Center(
-          child: ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.only(left: 55, right: 55),
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: Column(children: <Widget>[
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Form Login",
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(bottom: 30),
-                                  child: Text(
-                                    authValidation.role == 'barberman'
-                                        ? 'Barberman'
-                                        : 'Pelanggan',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontStyle: FontStyle.italic,
-                                        color:
-                                            Color.fromARGB(255, 173, 166, 166)),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Text(
-                            "E-Barber merupakan tempat pangkas rambut yang akan melayani anda tanpa harus keluar rumah.",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300,
-                                wordSpacing: 10,
-                                height: 2)),
-                      ])),
+        // title: Text("<", style: TextStyle(color: Colors.black),),
+      ),
+      body: FutureBuilder(
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Center(
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(left: 55, right: 55),
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Column(children: <Widget>[
+                            Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Form Login",
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                    Container(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 30),
+                                      child: Text(
+                                        authValidation.role == 'barberman'
+                                            ? 'Barberman'
+                                            : 'Pelanggan',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontStyle: FontStyle.italic,
+                                            color: Color.fromARGB(
+                                                255, 173, 166, 166)),
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            Text(
+                                "E-Barber merupakan tempat pangkas rambut yang akan melayani anda tanpa harus keluar rumah.",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w300,
+                                    wordSpacing: 10,
+                                    height: 2)),
+                          ])),
+                    ],
+                  ),
+                  Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          email,
+                          const SizedBox(height: 8),
+                          password,
+                          const SizedBox(height: 8),
+                        ],
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [lupaPassword],
+                  ),
+                  SizedBox(height: 24),
+                  loginButton,
+                  SizedBox(height: 24),
+                  registerButton
                 ],
               ),
-              Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      email,
-                      const SizedBox(height: 8),
-                      password,
-                      const SizedBox(height: 8),
-                    ],
-                  )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [lupaPassword],
-              ),
-              SizedBox(height: 24),
-              loginButton
-            ],
-          ),
-        ));
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+    );
   }
 }

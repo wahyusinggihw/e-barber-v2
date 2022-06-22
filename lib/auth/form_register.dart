@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_barber_v2/models/models.dart';
 
@@ -14,10 +15,21 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final _login = GlobalKey<_RegisterFormState>();
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _namaDepanController = TextEditingController();
+  final TextEditingController _namaBelakangController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  late bool _success;
+  late String _userEmail;
   var formData = FormData();
+
   @override
   Widget build(BuildContext context) {
     final namaDepan = TextFormField(
+      controller: _namaDepanController,
       autofocus: true,
       decoration: InputDecoration(
         hintText: 'Nama Depan',
@@ -28,7 +40,7 @@ class _RegisterFormState extends State<RegisterForm> {
         if (value!.isEmpty) {
           return "Nama Depan Wajib diisi";
         } else {
-          formData.namaDepan = value;
+          // formData.namaDepan = value;
           return null;
         }
       },
@@ -44,13 +56,14 @@ class _RegisterFormState extends State<RegisterForm> {
         if (value!.isEmpty) {
           return null;
         } else {
-          formData.namaBelakang = value;
+          // formData.namaBelakang = value;
           return null;
         }
       },
     );
 
     final email = TextFormField(
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: 'Email',
@@ -61,13 +74,14 @@ class _RegisterFormState extends State<RegisterForm> {
         if (value!.isEmpty) {
           return "Email Wajib diisi";
         } else {
-          formData.email = value;
+          // formData.email = value;
           return null;
         }
       },
     );
 
     final password = TextFormField(
+      controller: _passwordController,
       obscureText: true,
       autofocus: false,
       decoration: InputDecoration(
@@ -81,13 +95,14 @@ class _RegisterFormState extends State<RegisterForm> {
         } else if (value.length < 8) {
           return "Password harus lebih dari 8 huruf";
         } else {
-          formData.password = value;
+          // formData.password = value;
           return null;
         }
       },
     );
 
     final confirmPassword = TextFormField(
+      controller: _confirmPasswordController,
       obscureText: true,
       autofocus: false,
       decoration: InputDecoration(
@@ -109,11 +124,16 @@ class _RegisterFormState extends State<RegisterForm> {
     );
 
     // JIKA MENGGUNKAAN SATU MODEL, MAKA AKAN ADA PARAMETER ROLE
-    final roleForm = Visibility(
-        visible: false,
-        child: TextFormField(
-          initialValue: formData.role = "pelanggan",
-        ));
+    // final roleForm = Visibility(
+    //     visible: false,
+    //     child: TextFormField(
+    //       initialValue: formData.role = "pelanggan",
+    //     ));
+    Future signUp() async {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.toString().trim(),
+          password: _passwordController.text.toString().trim());
+    }
 
     final registerButton = Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
@@ -129,9 +149,10 @@ class _RegisterFormState extends State<RegisterForm> {
             backgroundColor: const Color(0xff20639B),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                signUp();
                 // simpanData.password = formData.password;
                 // simpanData.confirmPassword = formData.confirmPassword;
-                Navigator.pushNamed(context, 'login');
+                // Navigator.pushNamed(context, 'login');
               }
             },
             label: const Text("Register"),

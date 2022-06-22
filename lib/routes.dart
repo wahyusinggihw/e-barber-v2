@@ -1,9 +1,10 @@
-import 'package:e_barber_v2/auth/form_login.dart';
-import 'package:e_barber_v2/auth/form_register.dart';
-import 'package:e_barber_v2/bottombar.dart';
+import 'package:e_barber_v2/auth/login.dart';
+import 'package:e_barber_v2/auth/register.dart';
+import 'package:e_barber_v2/views/bottombar.dart';
+import 'package:e_barber_v2/views/main_menu.dart';
 import 'package:flutter/material.dart';
-import 'auth/auth_main.dart';
 import 'package:e_barber_v2/auth/login_register.dart';
+import 'auth/login.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -11,13 +12,13 @@ class RouteGenerator {
     // final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => AuthMain());
+        return MaterialPageRoute(builder: (_) => MainMenu());
       case '/login-register':
         return MaterialPageRoute(builder: (_) => LoginRegister());
       case '/login-form':
-        return MaterialPageRoute(builder: (_) => LoginForm());
+        return MaterialPageRoute(builder: (_) => Login());
       case '/register-form':
-        return MaterialPageRoute(builder: (_) => RegisterForm());
+        return MaterialPageRoute(builder: (_) => Register());
       case '/home':
         return MaterialPageRoute(builder: (_) => BottomBar());
       default:
