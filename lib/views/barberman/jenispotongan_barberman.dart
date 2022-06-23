@@ -5,6 +5,7 @@ import 'package:e_barber_v2/provider/barberman_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ListPotongan extends StatefulWidget {
   const ListPotongan({Key? key}) : super(key: key);
@@ -23,6 +24,13 @@ class _ListPotonganState extends State<ListPotongan> {
     // final rambutProvider = Provider.of<ModelRambut>(context, listen: false);
     // final RambutModel rambutModel = RambutModel();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+        ),
+        onPressed: () {},
+        backgroundColor: Color(0xff20639B),
+      ),
       body: StreamBuilder(
         // initialData: _productss.snapshots(),
         stream: _productss.snapshots(),
@@ -42,29 +50,73 @@ class _ListPotonganState extends State<ListPotongan> {
                     return CircularProgressIndicator();
                   case ConnectionState.active:
                   case ConnectionState.done:
-                    return streamSnapshot.data!.docs.length > 0
-                        ? Card(
-                            margin: const EdgeInsets.all(10),
-                            child: ListTile(
-                              title: Text(documentSnapshot['name']),
-                              subtitle:
-                                  Text(documentSnapshot['price'].toString()),
-                              trailing: SizedBox(
-                                  width: 100,
-                                  child: Row(children: [
-                                    IconButton(
-                                        icon: const Icon(Icons.edit),
-                                        onPressed: () {}
-                                        // _createOrUpdate(documentSnapshot)),
-                                        ),
-                                    IconButton(
-                                        icon: const Icon(Icons.delete),
-                                        onPressed: () {}
-                                        // _deleteProduct(documentSnapshot.id)),
-                                        )
-                                  ])),
+                    return streamSnapshot.data!.docs.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(36),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 120.0,
+                                  width: 120.0,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          'https://reqres.in/img/faces/2-image.jpg'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                Divider(
+                                  color: Colors.white,
+                                  height: 5,
+                                ),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Divider(
+                                  color: Colors.white,
+                                  height: 3,
+                                ),
+                                Text(
+                                  "Rp. " + documentSnapshot['price'],
+                                  style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ],
                             ),
                           )
+                        // ? Card(
+                        //     margin: const EdgeInsets.all(10),
+                        //     child: ClipRRect(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(50)),
+                        //       child: Container(
+                        //         color: Colors.amber,
+                        //       ),
+                        //     )
+                        // child: ListTile(
+                        //   title: Text(documentSnapshot['name']),
+                        //   subtitle:
+                        //       Text(documentSnapshot['price'].toString()),
+                        //   trailing: SizedBox(
+                        //       width: 100,
+                        //       child: Row(children: [
+                        //         IconButton(
+                        //             icon: const Icon(Icons.edit),
+                        //             onPressed: () {}
+                        //             // _createOrUpdate(documentSnapshot)),
+                        //             ),
+                        //         IconButton(
+                        //             icon: const Icon(Icons.delete),
+                        //             onPressed: () {}
+                        //             // _deleteProduct(documentSnapshot.id)),
+                        //             )
+                        //       ])),
+                        // ),
+
                         : Center(child: CircularProgressIndicator());
                   default:
                     break;

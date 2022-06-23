@@ -132,7 +132,7 @@ class _RegisterState extends State<Register> {
     );
 
     final roleForm = Visibility(
-      visible: true,
+      visible: false,
       child: TextFormField(
         // controller: _roleController,
         initialValue:

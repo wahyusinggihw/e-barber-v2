@@ -249,42 +249,41 @@ class LoginState extends State<Login> {
                         : "LoginPelanggan",
                     backgroundColor: const Color(0xff20639B),
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final message = await authProvider.signIn(
-                            email: _emailController.text,
-                            password: _passwordController.text);
+                      // if (_formKey.currentState!.validate()) {
+                      final message = await authProvider.signIn(
+                          email: 'wahyu@gmail.com', password: 'wahyusinggih');
 
-                        if (message!.contains('Success')) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text('Signed in as ' +
-                                  authProvider
-                                      .getUser()!
-                                      .displayName
-                                      .toString())));
-                          CircularProgressIndicator();
-                          Navigator.pushNamed(context, '/home');
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(message),
-                          ));
-                        }
-
-                        //   authProvider.signIn(
-                        //       _emailController.text, _passwordController.text);
-                        //   FirebaseAuth.instance.authStateChanges().listen(
-                        //     (User? user) {
-                        //       if (user != null) {
-                        //         Navigator.pushNamed(context, '/home');
-                        //         // print(FirebaseAuth.instance.currentUser);
-                        //         // ScaffoldMessenger.of(context)
-                        //         //     .showSnackBar(loginSuccess);
-                        //         // print(user.uid);
-                        //       } else {
-                        //         print(authProvider.errorCode);
-                        //       }
-                        //     },
-                        //   );
+                      if (message!.contains('Success')) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Signed in as ' +
+                                authProvider
+                                    .getUser()!
+                                    .displayName
+                                    .toString())));
+                        CircularProgressIndicator();
+                        Navigator.pushNamed(context, '/home');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(message),
+                        ));
                       }
+
+                      //   authProvider.signIn(
+                      //       _emailController.text, _passwordController.text);
+                      //   FirebaseAuth.instance.authStateChanges().listen(
+                      //     (User? user) {
+                      //       if (user != null) {
+                      //         Navigator.pushNamed(context, '/home');
+                      //         // print(FirebaseAuth.instance.currentUser);
+                      //         // ScaffoldMessenger.of(context)
+                      //         //     .showSnackBar(loginSuccess);
+                      //         // print(user.uid);
+                      //       } else {
+                      //         print(authProvider.errorCode);
+                      //       }
+                      //     },
+                      //   );
+                      // }
                     },
                     label: const Text("Login"),
                   ),
