@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ModelRambut with ChangeNotifier {
+class RambutModel {
   final CollectionReference productss =
-      FirebaseFirestore.instance.collection('jenispotongans');
+      FirebaseFirestore.instance.collection('jenispotongan');
 
   Future<void> createOrUpdate(
       String namaPotongan, String hargaPotongan, String photoUrl,
       [DocumentSnapshot? documentSnapshot]) async {
-    notifyListeners();
     String action = 'create';
     if (documentSnapshot != null) {
       action = 'update';
@@ -19,4 +16,9 @@ class ModelRambut with ChangeNotifier {
       hargaPotongan = documentSnapshot['harga'].toString();
     }
   }
+
+  // Future<void> getProduct(String namaPotongan, String hargaPotongan, String photoUrl,
+  //     [DocumentSnapshot? documentSnapshot]){
+  //       return
+  //     }
 }

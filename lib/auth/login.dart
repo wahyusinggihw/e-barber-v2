@@ -181,7 +181,7 @@ class LoginState extends State<Login> {
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         autofocus: true,
-                        // initialValue: 'example@gmail.com',
+                        // initialValue: 'wahyu@gmail.com',
                         decoration: InputDecoration(
                           hintText: 'Email',
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -200,7 +200,7 @@ class LoginState extends State<Login> {
                       TextFormField(
                         controller: _passwordController,
                         autofocus: false,
-                        // initialValue: 'password',
+                        // initialValue: 'wahyusinggih',
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password',
@@ -261,6 +261,7 @@ class LoginState extends State<Login> {
                                       .getUser()!
                                       .displayName
                                       .toString())));
+                          CircularProgressIndicator();
                           Navigator.pushNamed(context, '/home');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
