@@ -78,10 +78,13 @@ class _BerandaBarbermanState extends State<BerandaBarberman> {
                                     Container(
                                       padding: const EdgeInsets.only(
                                           bottom: 10, left: 20),
-                                      child: Text(
-                                        "Rp. 150.000,00",
-                                        style: TextStyle(
-                                            fontSize: 24, color: Colors.white),
+                                      child: StreamBuilder(
+                                        stream: ,
+                                        child: Text(
+                                          "Rp. 150.000,00",
+                                          style: TextStyle(
+                                              fontSize: 24, color: Colors.white),
+                                        ),
                                       ),
                                     ),
                                     Row(
