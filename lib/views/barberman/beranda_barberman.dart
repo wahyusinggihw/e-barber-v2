@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BerandaBarberman extends StatefulWidget {
   const BerandaBarberman({Key? key}) : super(key: key);
@@ -79,12 +81,41 @@ class _BerandaBarbermanState extends State<BerandaBarberman> {
                                       padding: const EdgeInsets.only(
                                           bottom: 10, left: 20),
                                       child: StreamBuilder(
-                                        stream: ,
-                                        child: Text(
-                                          "Rp. 150.000,00",
-                                          style: TextStyle(
-                                              fontSize: 24, color: Colors.white),
-                                        ),
+                                        stream: FirebaseFirestore.instance
+                                            .collection('saldo')
+                                            .snapshots(),
+                                        builder: (context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                streamSnapshot) {
+                                          if (streamSnapshot.hasData) {
+                                            return ListView.builder(
+                                                itemCount: streamSnapshot
+                                                    .data!.docs.length,
+                                                itemBuilder: ((context, index) {
+                                                  final DocumentSnapshot
+                                                      documentSnapshot =
+                                                      streamSnapshot
+                                                          .data!.docs[index];
+
+                                                  return Text(
+                                                    documentSnapshot['saldo']
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 24,
+                                                        color: Colors.white),
+                                                  );
+                                                }));
+                                            // return Text(
+                                            //   documentSnapshot['saldo'],
+                                            //   style: TextStyle(
+                                            //       fontSize: 24,
+                                            //       color: Colors.white),
+                                            // );
+                                          } else {
+                                            return Text('no data');
+                                          }
+                                          return Text('no data');
+                                        },
                                       ),
                                     ),
                                     Row(

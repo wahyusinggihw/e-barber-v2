@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '/provider/auth_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_barber_v2/models/user_model.dart';
+import 'package:e_barber_v2/models/models.dart';
 
 class UserBarberman extends StatefulWidget {
   const UserBarberman({Key? key}) : super(key: key);
