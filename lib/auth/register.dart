@@ -132,7 +132,7 @@ class _RegisterState extends State<Register> {
     );
 
     final roleForm = Visibility(
-      visible: false,
+      visible: true,
       child: TextFormField(
         // controller: _roleController,
         initialValue:
@@ -218,7 +218,7 @@ class _RegisterState extends State<Register> {
                                   padding: const EdgeInsets.only(bottom: 30),
                                   child: Text(
                                     authValidation.role == 'barberman'
-                                        ? 'Barberman'
+                                        ? 'barberman'
                                         : 'Pelanggan',
                                     style: TextStyle(
                                         fontSize: 15,
@@ -288,14 +288,15 @@ class _RegisterState extends State<Register> {
                         : "RegisterPelanggan",
                     backgroundColor: const Color(0xff20639B),
                     onPressed: () async {
-                      // print(formData.role);
                       if (_formKey.currentState!.validate()) {
+                        // print(formData.role);
                         var message = await authProvider.signUp(
                             firstName: _firstNameController.text,
                             lastName: _lastNameController.text,
                             email: _emailController.text,
                             password: _passwordController.text,
-                            roleId: formData.role);
+                            roleId: formData.role,
+                            saldo: '');
                         if (message!.contains('Success')) {
                           Navigator.pushNamed(context, '/home');
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -303,6 +304,7 @@ class _RegisterState extends State<Register> {
                                   Text('Register success, please login. ')));
                           Navigator.pushNamed(context, '/login-form');
                         } else {
+                          // print(message);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(message),
                           ));

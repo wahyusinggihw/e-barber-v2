@@ -1,9 +1,11 @@
 // import 'package:e_barber/barberman/bottombar_barberman.dart';
+import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/provider/auth_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserPelanggan extends StatefulWidget {
   const UserPelanggan({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class _UserPelangganState extends State<UserPelanggan> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthService>(context, listen: false);
+    final CollectionReference _users =
+        FirebaseFirestore.instance.collection('users');
     return ChangeNotifierProvider(
       create: (context) => AuthService(),
       child: Scaffold(
@@ -99,6 +103,7 @@ class _UserPelangganState extends State<UserPelanggan> {
                 padding: const EdgeInsets.only(top: 20),
                 child: TextButton(
                   onPressed: () {
+                    Navigator.pushNamed(context, '/logout-dialog');
                     // Route route = MaterialPageRoute(builder: (context) => const AuthMain());
                     // Navigator.push(context,route);
                   },

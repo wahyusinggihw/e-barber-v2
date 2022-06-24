@@ -8,7 +8,11 @@ class FormData {
       role = '';
 }
 
-class simpanData {
+class UserRole {
+  late String role = '';
+}
+
+class SimpanData {
   static late String id,
       namaDepan,
       namaBelakang,

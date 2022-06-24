@@ -15,8 +15,8 @@ class ListPotongan extends StatefulWidget {
 }
 
 class _ListPotonganState extends State<ListPotongan> {
-  final CollectionReference _productss =
-      FirebaseFirestore.instance.collection('products');
+  final CollectionReference _potongans =
+      FirebaseFirestore.instance.collection('jenis_potongan');
   // final RambutModel r
 
   @override
@@ -33,7 +33,7 @@ class _ListPotonganState extends State<ListPotongan> {
       ),
       body: StreamBuilder(
         // initialData: _productss.snapshots(),
-        stream: _productss.snapshots(),
+        stream: _potongans.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasData) {
             return GridView.builder(
@@ -43,11 +43,12 @@ class _ListPotonganState extends State<ListPotongan> {
               itemBuilder: (context, index) {
                 final DocumentSnapshot documentSnapshot =
                     streamSnapshot.data!.docs[index];
+
                 switch (streamSnapshot.connectionState) {
                   case ConnectionState.none:
                     return Text("No Connections");
                   case ConnectionState.waiting:
-                    return CircularProgressIndicator();
+                  // return CircularProgressIndicator();
                   case ConnectionState.active:
                   case ConnectionState.done:
                     return streamSnapshot.data!.docs.isNotEmpty
@@ -72,7 +73,7 @@ class _ListPotonganState extends State<ListPotongan> {
                                   height: 5,
                                 ),
                                 Text(
-                                  documentSnapshot['name'],
+                                  documentSnapshot['nama'],
                                   style: GoogleFonts.inter(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -81,7 +82,7 @@ class _ListPotonganState extends State<ListPotongan> {
                                   height: 3,
                                 ),
                                 Text(
-                                  "Rp. " + documentSnapshot['price'],
+                                  "Rp. " + documentSnapshot['harga'],
                                   style: GoogleFonts.inter(
                                       fontWeight: FontWeight.normal),
                                 ),

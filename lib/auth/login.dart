@@ -229,8 +229,22 @@ class LoginState extends State<Login> {
                             MaterialStateProperty.all(Colors.transparent)),
                     child: Text("Lupa Password?",
                         style: TextStyle(color: Colors.grey)),
-                    onPressed: () {
-                      authProvider.forgotPassword();
+                    onPressed: () async {
+                      final message = await authProvider.forgotPassword(
+                          email: _emailController.text);
+                      if (message!.contains('Success')) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Link reset password berhasil dikirim.'),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(message),
+                        ));
+                      }
                     },
                   ),
                 ],
@@ -251,10 +265,12 @@ class LoginState extends State<Login> {
                     onPressed: () async {
                       // if (_formKey.currentState!.validate()) {
                       final message = await authProvider.signIn(
-                          email: 'wahyu@gmail.com', password: 'wahyusinggih');
+                          email: _emailController.text,
+                          password: _passwordController.text);
 
                       if (message!.contains('Success')) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.blue,
                             content: Text('Signed in as ' +
                                 authProvider
                                     .getUser()!
@@ -264,6 +280,7 @@ class LoginState extends State<Login> {
                         Navigator.pushNamed(context, '/home');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
                           content: Text(message),
                         ));
                       }

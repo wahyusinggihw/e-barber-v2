@@ -1,8 +1,11 @@
 // import 'package:e_barber/auth.dart';
+import 'package:e_barber_v2/views/bottombar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '/provider/auth_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_barber_v2/models/user_model.dart';
 
 class UserBarberman extends StatefulWidget {
   const UserBarberman({Key? key}) : super(key: key);
@@ -17,6 +20,9 @@ class _UserBarbermanState extends State<UserBarberman> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthService>(context, listen: false);
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    UserModel getUser = UserModel();
 
     return ChangeNotifierProvider(
       create: (context) => AuthService(),
@@ -74,10 +80,17 @@ class _UserBarbermanState extends State<UserBarberman> {
                               child: Text(":"),
                             ),
                             Container(
-                              child: Text(authProvider
-                                  .getUser()!
-                                  .displayName
-                                  .toString()),
+                              child: FutureBuilder(
+                                future: getUser.getUser(
+                                    field: 'first_name', collection: 'users'),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Text(snapshot.data.toString());
+                                  } else {
+                                    return Text("");
+                                  }
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -90,8 +103,17 @@ class _UserBarbermanState extends State<UserBarberman> {
                               child: Text(":"),
                             ),
                             Container(
-                              child: Text(
-                                  authProvider.getUser()!.photoURL.toString()),
+                              child: FutureBuilder(
+                                future: getUser.getUser(
+                                    field: 'role', collection: 'users'),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Text(snapshot.data.toString());
+                                  } else {
+                                    return Text("");
+                                  }
+                                },
+                              ),
                             )
                           ],
                         ),

@@ -10,21 +10,22 @@ import 'package:e_barber_v2/views/pelanggan/dompet_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/order_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/user_pelanggan.dart';
 import 'package:e_barber_v2/models/models.dart';
-// import 'package:e_barber_v2/models/model_pelanggan.dart';
-// import 'package:e_barber_v2/models/model_barberman.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../provider/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
 
-  // const BottomBar({Key? key}) : super(key: key);
   @override
   _BottomBarState createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
   int _currentIndex = 0;
 
   void onBarTapped(int index) {
@@ -51,27 +52,50 @@ class _BottomBarState extends State<BottomBar> {
     UserPelanggan(),
   ];
 
-  // roleSwitch() {
-  //   if (authRole.role == 'barberman') {
-  //     return _childrenBarberman;
-  //   } else {
-  //     return _childrenPelanggan;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthService>(context, listen: false);
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUserRole = UserRole();
+
+    Future<String> data2() async {
+      var data1 = (await FirebaseFirestore.instance
+              .collection('users')
+              .doc(_auth.currentUser!.uid)
+              .get())
+          .data()!['role']
+          .toString();
+      return data1;
+    }
+
+    // FutureBuilder(
+    //   future: data2(),
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (snapshot.hasData) {
+    //       currentUserRole.role = snapshot.data;
+    //       if (currentUserRole.role == 'barberman') {
+    //         _childrenBarberman[_currentIndex];
+    //       }
+    //     }
+    //   },
+    // );
 
     return ChangeNotifierProvider(
       create: (context) => AuthService(),
       child: Scaffold(
-        body: authProvider.getUser()!.photoURL == 'barberman'
-            ? _childrenBarberman[_currentIndex]
-            : _childrenPelanggan[_currentIndex],
-        // body: authValidation.role == 'barberman'
-        //     ? _childrenBarberman[_currentIndex]
-        //     : _childrenPelanggan[_currentIndex],
+        body: FutureBuilder(
+          future: data2(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              currentUserRole.role = snapshot.data;
+              if (currentUserRole.role == 'barberman') {
+                return _childrenBarberman[_currentIndex];
+              } else {
+                return _childrenPelanggan[_currentIndex];
+              }
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
         bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),

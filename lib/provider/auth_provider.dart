@@ -1,13 +1,26 @@
+import 'dart:html';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   // var currentUser;
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
-  User? getUser() {
+  // Future<String> getSpecie(String userID) async {
+  //   DocumentReference documentReference = streamSnapshot.document(userID);
+  //   String user;
+  //   await documentReference.get().then((snapshot) {
+  //     user = snapshot.data['users'].toString();
+  //   });
+  //   return user;
+  // }
+
+  getUser() {
     return _auth.currentUser;
   }
 
@@ -23,12 +36,25 @@ class AuthService with ChangeNotifier {
     required String email,
     required String password,
     required String roleId,
+    required String saldo,
   }) async {
     try {
-      var u = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      u.user!.updateDisplayName(firstName + ' ' + lastName);
-      u.user!.updatePhotoURL(roleId);
+      var u = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((cred) {
+        db.collection('users').doc(cred.user?.uid).set({
+          'role': roleId,
+          'first_name': firstName,
+          'last_name': lastName,
+        });
+        db.collection('saldo').doc(cred.user?.uid).set({
+          'role': roleId,
+          'saldo': saldo,
+        });
+      });
+      // u.user!.updatePhotoURL(roleId);
+      // u.user!.updateDisplayName(firstName + ' ' + lastName);
+      // print(u.user!.uid);
       return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -71,9 +97,14 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future forgotPassword() async {
-    // await _auth.verifyPasswordResetCode('user-not-found');
-    // notifyListeners();
+  Future<String?> forgotPassword({required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      notifyListeners();
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
   }
 
   // Future createUser(
