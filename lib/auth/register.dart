@@ -131,20 +131,20 @@ class _RegisterState extends State<Register> {
       },
     );
 
-    final roleForm = Visibility(
-      visible: true,
-      child: TextFormField(
-        // controller: _roleController,
-        initialValue:
-            authValidation.role == 'barberman' ? 'barberman' : 'pelanggan',
-        validator: (value) {
-          if (value!.isNotEmpty) {
-            formData.role = value;
-          }
-          return null;
-        },
-      ),
-    );
+    // final roleForm = Visibility(
+    //   visible: true,
+    //   child: TextFormField(
+    //     // controller: _roleController,
+    //     initialValue:
+    //         authValidation.role == 'barberman' ? 'barberman' : 'pelanggan',
+    //     validator: (value) {
+    //       if (value!.isNotEmpty) {
+    //         formData.role = value;
+    //       }
+    //       return null;
+    //     },
+    //   ),
+    // );
     // final registerButton = Padding(
     //     padding: EdgeInsets.symmetric(vertical: 16),
     //     child: SizedBox(
@@ -244,7 +244,7 @@ class _RegisterState extends State<Register> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      roleForm,
+                      // roleForm,
                       firstName,
                       const SizedBox(height: 8),
                       lastName,
@@ -295,10 +295,12 @@ class _RegisterState extends State<Register> {
                             lastName: _lastNameController.text,
                             email: _emailController.text,
                             password: _passwordController.text,
-                            roleId: formData.role,
-                            saldo: '');
+                            roleId: authValidation.role == 'barberman'
+                                ? 'barberman'
+                                : 'pelanggan',
+                            saldo: 0);
                         if (message!.contains('Success')) {
-                          Navigator.pushNamed(context, '/home');
+                          // Navigator.pushNamed(context, '/home');
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content:
                                   Text('Register success, please login. ')));

@@ -1,6 +1,7 @@
 import 'package:e_barber_v2/auth/login.dart';
 import 'package:e_barber_v2/auth/register.dart';
-import 'package:e_barber_v2/views/barberman/jenispotongan_barberman.dart';
+import 'package:e_barber_v2/views/barberman/add_potongan.dart';
+import 'package:e_barber_v2/views/barberman/detail_potongan.dart';
 import 'package:e_barber_v2/views/barberman/logout.dart';
 import 'package:e_barber_v2/views/bottombar.dart';
 import 'package:e_barber_v2/views/main_menu.dart';
@@ -25,6 +26,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => BottomBar());
       case '/logout-dialog':
         return MaterialPageRoute(builder: (_) => Logout());
+      case '/add-potongan':
+        return MaterialPageRoute(builder: (_) => AddPotongan());
+      case '/detail-potongan':
+        return MaterialPageRoute(builder: (_) => DetailPotongan());
       default:
         return _errorRoute();
     }

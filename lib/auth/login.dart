@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -230,20 +229,22 @@ class LoginState extends State<Login> {
                     child: Text("Lupa Password?",
                         style: TextStyle(color: Colors.grey)),
                     onPressed: () async {
-                      final message = await authProvider.forgotPassword(
-                          email: _emailController.text);
-                      if (message!.contains('Success')) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                                Text('Link reset password berhasil dikirim.'),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text(message),
-                        ));
+                      if (_formKey.currentState!.validate()) {
+                        final message = await authProvider.forgotPassword(
+                            email: _emailController.text);
+                        if (message!.contains('Success')) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('Link reset password berhasil dikirim.'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(message),
+                          ));
+                        }
                       }
                     },
                   ),
@@ -263,44 +264,25 @@ class LoginState extends State<Login> {
                         : "LoginPelanggan",
                     backgroundColor: const Color(0xff20639B),
                     onPressed: () async {
-                      // if (_formKey.currentState!.validate()) {
-                      final message = await authProvider.signIn(
-                          email: _emailController.text,
-                          password: _passwordController.text);
+                      if (_formKey.currentState!.validate()) {
+                        final message = await authProvider.signIn(
+                            email: _emailController.text,
+                            password: _passwordController.text);
 
-                      if (message!.contains('Success')) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            backgroundColor: Colors.blue,
-                            content: Text('Signed in as ' +
-                                authProvider
-                                    .getUser()!
-                                    .displayName
-                                    .toString())));
-                        CircularProgressIndicator();
-                        Navigator.pushNamed(context, '/home');
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text(message),
-                        ));
+                        if (message!.contains('Success')) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.blue,
+                              content: Text('Signed in as ' +
+                                  authProvider.getUser()!.email)));
+                          CircularProgressIndicator();
+                          Navigator.pushNamed(context, '/home');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(message),
+                          ));
+                        }
                       }
-
-                      //   authProvider.signIn(
-                      //       _emailController.text, _passwordController.text);
-                      //   FirebaseAuth.instance.authStateChanges().listen(
-                      //     (User? user) {
-                      //       if (user != null) {
-                      //         Navigator.pushNamed(context, '/home');
-                      //         // print(FirebaseAuth.instance.currentUser);
-                      //         // ScaffoldMessenger.of(context)
-                      //         //     .showSnackBar(loginSuccess);
-                      //         // print(user.uid);
-                      //       } else {
-                      //         print(authProvider.errorCode);
-                      //       }
-                      //     },
-                      //   );
-                      // }
                     },
                     label: const Text("Login"),
                   ),

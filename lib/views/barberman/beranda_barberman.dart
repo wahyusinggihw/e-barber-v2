@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:e_barber_v2/models/models.dart';
 
 class BerandaBarberman extends StatefulWidget {
   const BerandaBarberman({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class BerandaBarberman extends StatefulWidget {
 class _BerandaBarbermanState extends State<BerandaBarberman> {
   @override
   Widget build(BuildContext context) {
+    UserModel getSaldo = UserModel();
     return Scaffold(
       body: Center(
         child: ListView(
@@ -80,41 +82,21 @@ class _BerandaBarbermanState extends State<BerandaBarberman> {
                                     Container(
                                       padding: const EdgeInsets.only(
                                           bottom: 10, left: 20),
-                                      child: StreamBuilder(
-                                        stream: FirebaseFirestore.instance
-                                            .collection('saldo')
-                                            .snapshots(),
-                                        builder: (context,
-                                            AsyncSnapshot<QuerySnapshot>
-                                                streamSnapshot) {
-                                          if (streamSnapshot.hasData) {
-                                            return ListView.builder(
-                                                itemCount: streamSnapshot
-                                                    .data!.docs.length,
-                                                itemBuilder: ((context, index) {
-                                                  final DocumentSnapshot
-                                                      documentSnapshot =
-                                                      streamSnapshot
-                                                          .data!.docs[index];
-
-                                                  return Text(
-                                                    documentSnapshot['saldo']
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 24,
-                                                        color: Colors.white),
-                                                  );
-                                                }));
-                                            // return Text(
-                                            //   documentSnapshot['saldo'],
-                                            //   style: TextStyle(
-                                            //       fontSize: 24,
-                                            //       color: Colors.white),
-                                            // );
+                                      child: FutureBuilder(
+                                        future: getSaldo.getUser(
+                                            field: 'saldo',
+                                            collection: 'saldo'),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Text(
+                                              snapshot.data.toString(),
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 24),
+                                            );
                                           } else {
-                                            return Text('no data');
+                                            return Text("");
                                           }
-                                          return Text('no data');
                                         },
                                       ),
                                     ),

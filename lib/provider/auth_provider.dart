@@ -1,6 +1,5 @@
-import 'dart:html';
-
-import 'package:bloc/bloc.dart';
+import 'package:e_barber_v2/models/models.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,8 @@ class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   // var currentUser;
   FirebaseFirestore db = FirebaseFirestore.instance;
+
+  final time = Timestamp.now();
 
   // Future<String> getSpecie(String userID) async {
   //   DocumentReference documentReference = streamSnapshot.document(userID);
@@ -32,26 +33,51 @@ class AuthService with ChangeNotifier {
 
   Future<String?> signUp({
     required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String roleId,
-    required String saldo,
+    lastName,
+    email,
+    password,
+    roleId,
+    saldo,
   }) async {
+    simpanTimeStamp.time = time.toString();
     try {
       var u = await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((cred) {
-        db.collection('users').doc(cred.user?.uid).set({
-          'role': roleId,
-          'first_name': firstName,
-          'last_name': lastName,
-        });
-        db.collection('saldo').doc(cred.user?.uid).set({
-          'role': roleId,
-          'saldo': saldo,
-        });
+        if (roleId != 'barberman') {
+          db.collection('users').doc(cred.user?.uid).set({
+            'role': roleId,
+            'first_name': firstName,
+            'last_name': lastName,
+          });
+          db.collection('saldo').doc(cred.user?.uid).set({
+            'role': roleId,
+            'saldo': saldo,
+          });
+        } else {
+          db.collection('users').doc(cred.user?.uid).set({
+            'role': roleId,
+            'first_name': firstName,
+            'last_name': lastName,
+          });
+          db.collection('saldo').doc(cred.user?.uid).set({
+            'role': roleId,
+            'saldo': saldo,
+          });
+          db
+              .collection('jenis_potongan')
+              .doc(cred.user?.uid)
+              .collection('potongans')
+              .doc(simpanTimeStamp.time)
+              .set({
+            'created': simpanTimeStamp.time,
+            'photo_url': '',
+            'nama': '',
+            'harga': '',
+          });
+        }
       });
+
       // u.user!.updatePhotoURL(roleId);
       // u.user!.updateDisplayName(firstName + ' ' + lastName);
       // print(u.user!.uid);
@@ -103,6 +129,12 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       return 'Success';
     } on FirebaseAuthException catch (e) {
+      // print(e.code);
+      if (e.code == 'user-not-found') {
+        return 'Akun masih belum terdaftar.';
+      } else if (e.code == 'invalid-email') {
+        return 'Email tidak valid';
+      }
       return e.message;
     }
   }

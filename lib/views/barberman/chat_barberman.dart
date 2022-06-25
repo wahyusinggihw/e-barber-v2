@@ -14,7 +14,8 @@ class _ChatBarbermanState extends State<ChatBarberman> {
     return Scaffold(
       body: Center(
         child: ListView(
-          padding: const EdgeInsets.only(left: 50, right: 50, top: 25),
+          padding:
+              const EdgeInsets.only(left: 50, right: 50, top: 25, bottom: 25),
           children: <Widget>[
             Center(
               child: Column(
@@ -33,7 +34,7 @@ class _ChatBarbermanState extends State<ChatBarberman> {
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: SizedBox(
                       width: 500,
-                      height: 1000,
+                      height: 600,
                       child: Column(
                         children: [
                           //Insert Chat

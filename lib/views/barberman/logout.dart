@@ -40,8 +40,10 @@ class Logout extends StatelessWidget {
                       authProvider.logOut();
                       Navigator.pushNamed(context, '/');
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Successfully logout from ' +
-                              authProvider.getUser()!.displayName.toString())));
+                        content: Text('Logged out from ' +
+                            authProvider.getUser()!.email.toString()),
+                        backgroundColor: Colors.blue,
+                      ));
                       // authValidation.role == 'barberman' ? 'barberman' : 'pelanggan';
                       // Navigator.pushNamed(context, '/register-form');
                     },

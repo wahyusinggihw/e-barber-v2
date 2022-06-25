@@ -1,7 +1,7 @@
 import 'package:e_barber_v2/views/barberman/beranda_barberman.dart';
 import 'package:e_barber_v2/views/barberman/chat_barberman.dart';
 import 'package:e_barber_v2/views/barberman/dompet_barberman.dart';
-import 'package:e_barber_v2/views/barberman/jenispotongan_barberman.dart';
+import 'package:e_barber_v2/views/barberman/listpotongan_barberman.dart';
 import 'package:e_barber_v2/views/barberman/order_barberman.dart';
 import 'package:e_barber_v2/views/barberman/user_barberman.dart';
 import 'package:e_barber_v2/views/pelanggan/beranda_pelanggan.dart';

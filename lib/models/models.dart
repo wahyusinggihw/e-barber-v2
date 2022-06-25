@@ -45,6 +45,24 @@ class SimpanData {
       role;
 }
 
+class simpanDataPotongan {
+  static late String photoUrl, nama, harga;
+}
+
+class simpanDataPotongan2 {
+  static late String photoUrl, nama, harga;
+}
+
 class authValidation {
   static late String role = '', action = '';
+}
+
+class simpanTimeStamp {
+  static late String time = '';
+}
+
+class ScreenArguments {
+  final String id;
+
+  ScreenArguments(this.id);
 }
