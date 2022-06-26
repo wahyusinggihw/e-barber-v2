@@ -1,3 +1,4 @@
+import 'package:e_barber_v2/models/models.dart';
 import 'package:e_barber_v2/provider/auth_provider.dart';
 import 'package:e_barber_v2/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,10 +28,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final time = Timestamp.now();
     FirebaseAuth.instance;
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+        simpanTimeStampAuth.time = time.toString();
         // print(snapshot);
         return const MaterialApp(
             debugShowCheckedModeBanner: false,

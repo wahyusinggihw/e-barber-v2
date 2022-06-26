@@ -46,7 +46,7 @@ class SimpanData {
 }
 
 class simpanDataPotongan {
-  static late String photoUrl, nama, harga;
+  static late String photoUrl, nama, harga, id;
 }
 
 class simpanDataPotongan2 {
@@ -58,6 +58,10 @@ class authValidation {
 }
 
 class simpanTimeStamp {
+  static late String time = '';
+}
+
+class simpanTimeStampAuth {
   static late String time = '';
 }
 

@@ -39,7 +39,7 @@ class AuthService with ChangeNotifier {
     roleId,
     saldo,
   }) async {
-    simpanTimeStamp.time = time.toString();
+    // simpanTimeStampAuth.time = time.toString();
     try {
       var u = await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -51,8 +51,13 @@ class AuthService with ChangeNotifier {
             'last_name': lastName,
           });
           db.collection('saldo').doc(cred.user?.uid).set({
-            'role': roleId,
+            'uid': cred.user?.uid,
             'saldo': saldo,
+          });
+          db.collection('pesanan').doc(cred.user?.uid).set({
+            'uid': cred.user?.uid,
+            'first_name': firstName,
+            'last_name': lastName,
           });
         } else {
           db.collection('users').doc(cred.user?.uid).set({
@@ -61,22 +66,24 @@ class AuthService with ChangeNotifier {
             'last_name': lastName,
           });
           db.collection('saldo').doc(cred.user?.uid).set({
+            'uid': cred.user?.uid,
             'role': roleId,
             'saldo': saldo,
           });
-          db
-              .collection('jenis_potongan')
-              .doc(cred.user?.uid)
-              .collection('potongans')
-              .doc(simpanTimeStamp.time)
-              .set({
-            'created': simpanTimeStamp.time,
-            'photo_url': '',
-            'nama': '',
-            'harga': '',
-          });
+          // db
+          //     .collection('jenis_potongan')
+          //     .doc(cred.user?.uid)
+          //     .collection('potongans')
+          //     .doc(simpanTimeStampAuth.time)
+          //     .set({
+          //   'created': simpanTimeStampAuth.time,
+          //   'photo_url': '',
+          //   'nama': '',
+          //   'harga': '',
+          // });
         }
       });
+      notifyListeners();
 
       // u.user!.updatePhotoURL(roleId);
       // u.user!.updateDisplayName(firstName + ' ' + lastName);

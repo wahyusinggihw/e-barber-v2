@@ -301,9 +301,12 @@ class _RegisterState extends State<Register> {
                             saldo: 0);
                         if (message!.contains('Success')) {
                           // Navigator.pushNamed(context, '/home');
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text('Register success, please login. ')));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Register success, please login. '),
+                              backgroundColor: Colors.blue,
+                            ),
+                          );
                           Navigator.pushNamed(context, '/login-form');
                         } else {
                           // print(message);

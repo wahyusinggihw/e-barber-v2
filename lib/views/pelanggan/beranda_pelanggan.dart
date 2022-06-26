@@ -1,3 +1,4 @@
+import 'package:e_barber_v2/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,6 +14,7 @@ class _BerandaPelangganState extends State<BerandaPelanggan> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel getSaldo = UserModel();
     return Scaffold(
       body: Center(
         child: ListView(
@@ -37,7 +39,7 @@ class _BerandaPelangganState extends State<BerandaPelanggan> {
                       height: 150,
                       width: 500,
                       child: Image.asset(
-                        'assets/images/',
+                        'assets/images/beranda2.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -81,10 +83,22 @@ class _BerandaPelangganState extends State<BerandaPelanggan> {
                                     Container(
                                       padding: const EdgeInsets.only(
                                           bottom: 10, left: 20),
-                                      child: Text(
-                                        "Rp. 150.000,00",
-                                        style: TextStyle(
-                                            fontSize: 24, color: Colors.white),
+                                      child: FutureBuilder(
+                                        future: getSaldo.getUser(
+                                            field: 'saldo',
+                                            collection: 'saldo'),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Text(
+                                              'Rp. ' + snapshot.data.toString(),
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 24),
+                                            );
+                                          } else {
+                                            return Text("");
+                                          }
+                                        },
                                       ),
                                     ),
                                     Row(

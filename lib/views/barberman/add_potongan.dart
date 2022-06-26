@@ -13,6 +13,7 @@ class AddPotongan extends StatefulWidget {
 
 class _AddPotonganState extends State<AddPotongan> {
   final TextEditingController _photoUrlController = TextEditingController();
+  final TextEditingController _idController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
   @override
@@ -83,6 +84,21 @@ class _AddPotonganState extends State<AddPotongan> {
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 5),
                     child: Column(children: [
                       TextFormField(
+                        controller: _idController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          hintText: "id",
+                          labelText: "ID",
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'wajib diisi!';
+                          }
+                          // formData.nama = value;
+                          return null;
+                        },
+                      ),
+                      TextFormField(
                         controller: _namaController,
                         autofocus: true,
                         decoration: InputDecoration(
@@ -122,6 +138,7 @@ class _AddPotonganState extends State<AddPotongan> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final message = await barbermanModel.createModelRambut(
+                        idnama: _idController.text,
                         photoUrl: 'https://reqres.in/img/faces/2-image.jpg',
                         namaPotongan: _namaController.text,
                         hargaPotongan: _hargaController.text);
@@ -130,7 +147,7 @@ class _AddPotonganState extends State<AddPotongan> {
                       print('success');
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         backgroundColor: Colors.blue,
-                        content: Text('Berhasil ditambah'),
+                        content: Text('Data berhasil ditambah'),
                       ));
                       Navigator.pop(context);
                     } else {

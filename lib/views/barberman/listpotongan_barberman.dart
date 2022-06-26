@@ -77,6 +77,8 @@ class _ListPotonganState extends State<ListPotongan> {
                                   InkWell(
                                     borderRadius: BorderRadius.circular(125),
                                     onTap: () {
+                                      simpanDataPotongan.id =
+                                          documentSnapshot['idnama'];
                                       simpanDataPotongan.harga =
                                           documentSnapshot['harga'];
                                       simpanDataPotongan.nama =

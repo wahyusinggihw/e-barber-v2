@@ -37,6 +37,25 @@ class _DetailPotonganState extends State<DetailPotongan> {
         ),
         // title: Text("<", style: TextStyle(color: Colors.black),),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.delete,
+        ),
+        onPressed: () async {
+          final message = await barbermanModel.deleteModelRambut(
+              idnama: simpanDataPotongan.id);
+          if (message!.contains('Success')) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text('Data berhasil dihapus'),
+              ),
+            );
+            Navigator.pop(context);
+          }
+        },
+        backgroundColor: Color(0xff20639B),
+      ),
       body: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(20),
@@ -77,10 +96,28 @@ class _DetailPotonganState extends State<DetailPotongan> {
                         ],
                       ),
                       TextFormField(
+                        readOnly: true,
+                        enabled: false,
+                        // controller: _namaController,
+                        initialValue: simpanDataPotongan.id,
+                        decoration: InputDecoration(
+                          hintText: "id-model",
+                          labelText: "ID",
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'wajib diisi!';
+                          }
+                          simpanDataPotongan.id = value;
+                          // formData.nama = value;
+                          return null;
+                        },
+                      ),
+                      TextFormField(
                         // controller: _namaController,
                         initialValue: simpanDataPotongan.nama,
                         decoration: InputDecoration(
-                          hintText: "Nama Model",
+                          hintText: "Nama",
                           labelText: "Nama",
                         ),
                         validator: (value) {
@@ -120,6 +157,7 @@ class _DetailPotonganState extends State<DetailPotongan> {
                   // print(message);
                   if (_formKey.currentState!.validate()) {
                     final message = await barbermanModel.updateModelRambut(
+                        idnama: simpanDataPotongan.id,
                         namaPotongan: simpanDataPotongan.nama,
                         hargaPotongan: simpanDataPotongan.harga,
                         photoUrl: '');

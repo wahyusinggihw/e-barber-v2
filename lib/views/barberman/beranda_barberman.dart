@@ -89,7 +89,7 @@ class _BerandaBarbermanState extends State<BerandaBarberman> {
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
                                             return Text(
-                                              snapshot.data.toString(),
+                                              'Rp. ' + snapshot.data.toString(),
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 24),

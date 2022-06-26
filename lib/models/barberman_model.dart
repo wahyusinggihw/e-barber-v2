@@ -14,18 +14,20 @@ class BarbermanModel {
   final time = Timestamp.now();
 
   Future<String?> createModelRambut({
-    required String namaPotongan,
+    required String idnama,
+    namaPotongan,
     hargaPotongan,
     photoUrl,
   }) async {
     try {
-      // simpanTimeStamp.time = time.toString();
+      simpanTimeStamp.time = time.toString();
       modelrambut
           .doc(_auth.currentUser!.uid)
           .collection('potongans')
-          .doc(simpanTimeStamp.time)
+          .doc(idnama)
           .set({
-        'created': simpanTimeStamp.time,
+        // 'created': simpanTimeStamp.time,
+        'idnama': idnama,
         'nama': namaPotongan,
         'photo_url': photoUrl,
         'harga': hargaPotongan
@@ -40,37 +42,51 @@ class BarbermanModel {
   }
 
   Future<String?> updateModelRambut({
-    required String namaPotongan,
+    required String idnama,
+    namaPotongan,
     hargaPotongan,
     photoUrl,
   }) async {
     try {
-      final update = await modelrambut
+      final update = modelrambut
           .doc(_auth.currentUser!.uid)
           .collection('potongans')
-          .doc(simpanTimeStamp.time);
+          .doc(idnama);
 
       update.update({
+        'idnama': idnama,
         'nama': namaPotongan,
         'photo_url': photoUrl,
-        'harga': simpanDataPotongan.harga
+        'harga': hargaPotongan
       });
-      // modelrambut
-      //     .doc(_auth.currentUser!.uid)
-      //     .collection('potongans')
-      //     .doc(namaPotongan)
-      //     .set({
-      //   'nama': namaPotongan,
-      //   'photo_url': photoUrl,
-      //   'harga': hargaPotongan
-      // });
-      // print(hasil);
+
       return 'Success';
     } on FirebaseAuthException catch (e) {
       print(e.message);
     } catch (e) {
       return e.toString();
     }
+  }
+
+  Future<String?> deleteModelRambut({
+    required String idnama,
+  }) async {
+    try {
+      modelrambut
+          .doc(_auth.currentUser!.uid)
+          .collection('potongans')
+          .doc(idnama)
+          .delete();
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      return e.toString();
+    }
+
+    // modelrambut
+    //     .doc(_auth.currentUser!.uid)
+    //     .collection('potongans')
+    //     .doc(simpanTimeStampAuth.time)
+    //     .delete();
   }
 
   Future pickImage() async {
