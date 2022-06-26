@@ -7,7 +7,8 @@ import 'package:e_barber_v2/views/barberman/user_barberman.dart';
 import 'package:e_barber_v2/views/pelanggan/beranda_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/chat_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/dompet_pelanggan.dart';
-import 'package:e_barber_v2/views/pelanggan/order_pelanggan.dart';
+import 'package:e_barber_v2/views/pelanggan/statusorder_pelanggan.dart';
+import 'package:e_barber_v2/views/pelanggan/listbarber_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/user_pelanggan.dart';
 import 'package:e_barber_v2/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,7 +40,7 @@ class _BottomBarState extends State<BottomBar> {
     BerandaBarberman(),
     ChatBarberman(),
     ListPotongan(),
-    DompetBarberman(),
+    OrderBarberman(),
     UserBarberman(),
   ];
 
@@ -47,10 +48,45 @@ class _BottomBarState extends State<BottomBar> {
     // BerandaBarberman(),
     BerandaPelanggan(),
     ChatPelanggan(),
-    OrderPelanggan(),
-    DompetPelanggan(),
+    ListBarber(),
+    StatusOrderPelanggan(),
     UserPelanggan(),
   ];
+
+  Widget bottomNavBar(int currentIndex) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: onBarTapped,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      elevation: 0,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white24,
+      backgroundColor: const Color(0xff20639B),
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+            backgroundColor: Color(0xff20639B)),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.chat_outlined),
+            label: "Chat",
+            backgroundColor: Color(0xff20639B)),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: "Order",
+            backgroundColor: Color(0xff20639B)),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet_outlined),
+            label: "Dompet",
+            backgroundColor: Color(0xff20639B)),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: "User",
+            backgroundColor: Color(0xff20639B)),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,38 +137,7 @@ class _BottomBarState extends State<BottomBar> {
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: onBarTapped,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            elevation: 0,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white24,
-            backgroundColor: const Color(0xff20639B),
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: "Home",
-                  backgroundColor: Color(0xff20639B)),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_outlined),
-                  label: "Chat",
-                  backgroundColor: Color(0xff20639B)),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.list_alt),
-                  label: "Order",
-                  backgroundColor: Color(0xff20639B)),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet_outlined),
-                  label: "Dompet",
-                  backgroundColor: Color(0xff20639B)),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle_outlined),
-                  label: "User",
-                  backgroundColor: Color(0xff20639B)),
-            ],
-          ),
+          child: bottomNavBar(_currentIndex),
         ),
       ),
     );

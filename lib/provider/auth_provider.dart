@@ -31,14 +31,15 @@ class AuthService with ChangeNotifier {
     return result;
   }
 
-  Future<String?> signUp({
-    required String firstName,
-    lastName,
-    email,
-    password,
-    roleId,
-    saldo,
-  }) async {
+  Future<String?> signUp(
+      {required String firstName,
+      lastName,
+      email,
+      password,
+      roleId,
+      saldo,
+      alamat,
+      nohp}) async {
     // simpanTimeStampAuth.time = time.toString();
     try {
       var u = await _auth
@@ -46,24 +47,47 @@ class AuthService with ChangeNotifier {
           .then((cred) {
         if (roleId != 'barberman') {
           db.collection('users').doc(cred.user?.uid).set({
+            'uid': cred.user?.uid,
             'role': roleId,
             'first_name': firstName,
             'last_name': lastName,
+            'alamat': alamat,
+            'no_hp': nohp
+          });
+          db.collection('pelanggans').doc(cred.user?.uid).set({
+            'uid': cred.user?.uid,
+            'role': roleId,
+            'first_name': firstName,
+            'last_name': lastName,
+            'alamat': alamat,
+            'no_hp': nohp
           });
           db.collection('saldo').doc(cred.user?.uid).set({
             'uid': cred.user?.uid,
+            'role': roleId,
             'saldo': saldo,
           });
-          db.collection('pesanan').doc(cred.user?.uid).set({
-            'uid': cred.user?.uid,
-            'first_name': firstName,
-            'last_name': lastName,
-          });
+          // db.collection('pesanan').doc(cred.user?.uid).set({
+          //   'uid': cred.user?.uid,
+          //   'first_name': firstName,
+          //   'last_name': lastName,
+          // });
         } else {
           db.collection('users').doc(cred.user?.uid).set({
+            'uid': cred.user?.uid,
             'role': roleId,
             'first_name': firstName,
             'last_name': lastName,
+            'alamat': alamat,
+            'no_hp': nohp
+          });
+          db.collection('barbers').doc(cred.user?.uid).set({
+            'uid': cred.user?.uid,
+            'role': roleId,
+            'first_name': firstName,
+            'last_name': lastName,
+            'alamat': alamat,
+            'no_hp': nohp
           });
           db.collection('saldo').doc(cred.user?.uid).set({
             'uid': cred.user?.uid,

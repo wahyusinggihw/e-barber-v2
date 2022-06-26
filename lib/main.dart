@@ -33,7 +33,6 @@ class MyApp extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        simpanTimeStampAuth.time = time.toString();
         // print(snapshot);
         return const MaterialApp(
             debugShowCheckedModeBanner: false,

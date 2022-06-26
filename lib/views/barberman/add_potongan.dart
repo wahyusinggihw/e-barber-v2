@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:e_barber_v2/models/barberman_model.dart';
 import 'package:flutter/material.dart';
-import '../../provider/barberman_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as p;
 
 class AddPotongan extends StatefulWidget {
   const AddPotongan({Key? key}) : super(key: key);
@@ -16,12 +18,49 @@ class _AddPotonganState extends State<AddPotongan> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
+
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future uploadFile() async {
+    if (_photo == null) return;
+    final fileName = p.basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!);
+    } catch (e) {
+      print('error occured');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // final dataProvider = Provider.of<ModelRambut>(context, listen: false);
     final ImagePicker imagePicker = ImagePicker();
     final _formKey = GlobalKey<FormState>();
     BarbermanModel barbermanModel = BarbermanModel();
+    String imagePath = 'null';
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -52,30 +91,46 @@ class _AddPotonganState extends State<AddPotongan> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Stack(
-                alignment: Alignment.center,
+                // alignment: Alignment.center,
                 children: [
-                  Container(
-                    height: 120.0,
-                    width: 120.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            'http://www.gravatar.com/avatar/?d=mp'),
-                        fit: BoxFit.fill,
-                      ),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  Positioned(
-                    top: 90,
-                    child: IconButton(
-                      splashColor: Colors.white,
-                      splashRadius: 5,
-                      onPressed: () {},
-                      icon: Icon(Icons.add_a_photo_rounded),
-                      color: Colors.black,
-                    ),
-                  )
+                  (_photo != null)
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            _photo!,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(50)),
+                          width: 100,
+                          height: 100,
+                          child: IconButton(
+                            splashColor: Colors.white,
+                            splashRadius: 5,
+                            onPressed: () {
+                              imgFromGallery();
+                            },
+                            icon: Icon(Icons.add_a_photo_rounded),
+                            color: Colors.black,
+                          ),
+                        ),
+                  // Positioned(
+                  //   top: 20,
+                  //   child: IconButton(
+                  //     splashColor: Colors.white,
+                  //     splashRadius: 5,
+                  //     onPressed: () {
+                  //       print('object');
+                  //     },
+                  //     icon: Icon(Icons.add_a_photo_rounded),
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
                 ],
               ),
               Form(

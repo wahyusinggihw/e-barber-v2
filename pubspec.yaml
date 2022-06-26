@@ -36,6 +36,7 @@ dependencies:
 
 dev_dependencies:
   cloud_firestore: ^3.1.18
+  firebase_storage: ^10.2.18
   flutter_bloc: ^8.0.1
   flutter_firebase_chat_core: ^1.5.4
   flutter_lints: ^1.0.0

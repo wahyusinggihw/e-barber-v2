@@ -5,6 +5,9 @@ import 'package:e_barber_v2/views/barberman/detail_potongan.dart';
 import 'package:e_barber_v2/views/barberman/logout.dart';
 import 'package:e_barber_v2/views/bottombar.dart';
 import 'package:e_barber_v2/views/main_menu.dart';
+import 'package:e_barber_v2/views/pelanggan/detailbarber_pelanggan.dart';
+import 'package:e_barber_v2/views/pelanggan/order_pelanggan.dart';
+import 'package:e_barber_v2/views/pelanggan/statusorder_pelanggan.dart';
 import 'package:flutter/material.dart';
 import 'package:e_barber_v2/auth/login_register.dart';
 import 'auth/login.dart';
@@ -30,6 +33,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddPotongan());
       case '/detail-potongan':
         return MaterialPageRoute(builder: (_) => DetailPotongan());
+      case '/detail-barber':
+        return MaterialPageRoute(builder: (_) => DetailBarber());
+      case '/order-pelanggan':
+        return MaterialPageRoute(builder: (_) => OrderPelanggan());
+      case '/order-pelanggan-status':
+        return MaterialPageRoute(builder: (_) => StatusOrderPelanggan());
       default:
         return _errorRoute();
     }

@@ -17,13 +17,14 @@ class _RegisterState extends State<Register> {
   // final _loginKey = GlobalKey<_RegisterState>();
   final _formKey = GlobalKey<FormState>();
   var formData = FormData();
-  final TextEditingController _roleController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _noHpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,44 @@ class _RegisterState extends State<Register> {
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         hintText: 'Nama belakang (Opsional)',
+        contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return null;
+          // return "Nama belakang wajib diisi";
+        } else {
+          // formData.email = value;
+          return null;
+        }
+      },
+    );
+
+    final alamat = TextFormField(
+      controller: _alamatController,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        hintText: 'Alamat',
+        contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return null;
+          // return "Nama belakang wajib diisi";
+        } else {
+          // formData.email = value;
+          return null;
+        }
+      },
+    );
+
+    final noHp = TextFormField(
+      controller: _noHpController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: 'Nomor Handphone',
         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -131,53 +170,6 @@ class _RegisterState extends State<Register> {
       },
     );
 
-    // final roleForm = Visibility(
-    //   visible: true,
-    //   child: TextFormField(
-    //     // controller: _roleController,
-    //     initialValue:
-    //         authValidation.role == 'barberman' ? 'barberman' : 'pelanggan',
-    //     validator: (value) {
-    //       if (value!.isNotEmpty) {
-    //         formData.role = value;
-    //       }
-    //       return null;
-    //     },
-    //   ),
-    // );
-    // final registerButton = Padding(
-    //     padding: EdgeInsets.symmetric(vertical: 16),
-    //     child: SizedBox(
-    //       width: 250,
-    //       height: 50,
-    //       child: FloatingActionButton.extended(
-    //         shape:
-    //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    //         heroTag: authValidation.role == 'barberman'
-    //             ? "RegisterBarberman"
-    //             : "RegisterPelanggan",
-    //         backgroundColor: const Color(0xff20639B),
-    //         onPressed: () {
-    //           authProvider.signUp(
-    //               _emailController.text, _passwordController.text);
-    //           // if (_formKey.currentState!.validate()) {
-    //           // Navigator.pushNamed(context, '/home');
-    //           // simpanData.password = formData.password;
-    //           // simpanData.confirmPassword = formData.confirmPassword;
-    //           // }
-    //           //
-    //         },
-    //         label: const Text("Register"),
-    //       ),
-    //     ));
-
-    // final lupaPassword = TextButton(
-    //   style: ButtonStyle(
-    //       overlayColor: MaterialStateProperty.all(Colors.transparent)),
-    //   child: Text("Sudah punya akun?", style: TextStyle(color: Colors.grey)),
-    //   onPressed: () {},
-    // );
-
     return ChangeNotifierProvider(
       create: (context) => AuthService(),
       child: Scaffold(
@@ -249,6 +241,10 @@ class _RegisterState extends State<Register> {
                       const SizedBox(height: 8),
                       lastName,
                       const SizedBox(height: 8),
+                      alamat,
+                      const SizedBox(height: 8),
+                      noHp,
+                      const SizedBox(height: 8),
                       email,
                       const SizedBox(height: 8),
                       password,
@@ -298,7 +294,9 @@ class _RegisterState extends State<Register> {
                             roleId: authValidation.role == 'barberman'
                                 ? 'barberman'
                                 : 'pelanggan',
-                            saldo: 0);
+                            saldo: 0,
+                            alamat: _alamatController.text,
+                            nohp: _noHpController.text);
                         if (message!.contains('Success')) {
                           // Navigator.pushNamed(context, '/home');
                           ScaffoldMessenger.of(context).showSnackBar(

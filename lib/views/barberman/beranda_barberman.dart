@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_barber_v2/models/models.dart';
+import 'package:e_barber_v2/models/user_model.dart';
 
 class BerandaBarberman extends StatefulWidget {
   const BerandaBarberman({Key? key}) : super(key: key);
