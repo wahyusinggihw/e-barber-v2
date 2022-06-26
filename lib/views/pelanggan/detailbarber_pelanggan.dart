@@ -89,6 +89,8 @@ class _DetailBarberState extends State<DetailBarber> {
                                           documentSnapshot['nama'];
                                       simpanDataOrder.harga =
                                           documentSnapshot['harga'];
+                                      simpanDataOrder.photoUrl =
+                                          documentSnapshot['photo_url'];
                                       // simpanDataPotongan.nama =
                                       //     documentSnapshot['nama'];
                                       // simpanDataPotongan.photoUrl =
@@ -103,7 +105,7 @@ class _DetailBarberState extends State<DetailBarber> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                              'https://reqres.in/img/faces/2-image.jpg'),
+                                              documentSnapshot['photo_url']),
                                           fit: BoxFit.fill,
                                         ),
                                         shape: BoxShape.circle,

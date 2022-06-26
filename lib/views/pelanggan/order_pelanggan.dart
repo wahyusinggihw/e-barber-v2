@@ -70,8 +70,7 @@ class _OrderPelangganState extends State<OrderPelanggan> {
                     width: 120.0,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                            'https://reqres.in/img/faces/2-image.jpg'),
+                        image: NetworkImage(simpanDataOrder.photoUrl),
                         fit: BoxFit.fill,
                       ),
                       shape: BoxShape.circle,

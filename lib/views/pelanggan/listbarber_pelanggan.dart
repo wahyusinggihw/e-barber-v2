@@ -1,4 +1,6 @@
 // import 'package:e_barber/barberman/bottombar_barberman.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:e_barber_v2/models/models.dart';
@@ -81,7 +83,9 @@ class _ListBarberState extends State<ListBarber> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                          'https://reqres.in/img/faces/2-image.jpg'),
+                                          'https://reqres.in/img/faces/' +
+                                              Random().nextInt(12).toString() +
+                                              '-image.jpg'),
                                       fit: BoxFit.fill,
                                     ),
                                     shape: BoxShape.circle,

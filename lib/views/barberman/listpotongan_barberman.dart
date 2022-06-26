@@ -83,6 +83,8 @@ class _ListPotonganState extends State<ListPotongan> {
                                           documentSnapshot['harga'];
                                       simpanDataPotongan.nama =
                                           documentSnapshot['nama'];
+                                      simpanDataPotongan.photoUrl =
+                                          documentSnapshot['photo_url'];
                                       // simpanDataPotongan.photoUrl =
                                       //     documentSnapshot[
                                       //         'https://reqres.in/img/faces/2-image.jpg'];
@@ -95,7 +97,7 @@ class _ListPotonganState extends State<ListPotongan> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                              'https://reqres.in/img/faces/2-image.jpg'),
+                                              documentSnapshot['photo_url']),
                                           fit: BoxFit.fill,
                                         ),
                                         shape: BoxShape.circle,

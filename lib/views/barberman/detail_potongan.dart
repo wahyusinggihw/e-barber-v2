@@ -76,23 +76,23 @@ class _DetailPotonganState extends State<DetailPotongan> {
                             width: 120.0,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(
-                                    'http://www.gravatar.com/avatar/?d=mp'),
+                                image:
+                                    NetworkImage(simpanDataPotongan.photoUrl),
                                 fit: BoxFit.fill,
                               ),
                               shape: BoxShape.circle,
                             ),
                           ),
-                          Positioned(
-                            top: 90,
-                            child: IconButton(
-                              splashColor: Colors.white,
-                              splashRadius: 5,
-                              onPressed: () {},
-                              icon: Icon(Icons.add_a_photo_rounded),
-                              color: Colors.black,
-                            ),
-                          )
+                          // Positioned(
+                          //   top: 80,
+                          //   child: IconButton(
+                          //     splashColor: Colors.white,
+                          //     splashRadius: 5,
+                          //     onPressed: () {},
+                          //     icon: Icon(Icons.add_a_photo_rounded),
+                          //     color: Colors.white,
+                          //   ),
+                          // )
                         ],
                       ),
                       TextFormField(

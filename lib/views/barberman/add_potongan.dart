@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:e_barber_v2/models/barberman_model.dart';
+import 'package:e_barber_v2/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as p;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddPotongan extends StatefulWidget {
   const AddPotongan({Key? key}) : super(key: key);
@@ -22,35 +25,62 @@ class _AddPotonganState extends State<AddPotongan> {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
-  File? _photo;
-  final ImagePicker _picker = ImagePicker();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future imgFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  // final ImagePicker filePicker = ImagePicker();
+  // File? _photo;
+  // final ImagePicker _picker = ImagePicker();
 
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        print('No image selected.');
-      }
-    });
+  // Future imgFromGallery() async {
+  //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _photo = File(pickedFile.path);
+  //       uploadFile();
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
+
+  // Future uploadFile() async {
+  //   if (_photo == null) return;
+  //   final fileName = p.basename(_photo!.path);
+  //   final destination = 'files/$fileName';
+
+  //   try {
+  //     final ref = firebase_storage.FirebaseStorage.instance
+  //         .ref(destination)
+  //         .child('file/');
+  //     await ref.putFile(_photo!);
+  //   } catch (e) {
+  //     print('error occured');
+  //   }
+  // }
+
+  PlatformFile? pickedFile;
+
+  ////WORK
+  Future uploadFile() async {
+    // final path = 'potongans/' + _idController.text;
+    // final file = File(pickedFile!.path!);
+    // final ref = firebase_storage.FirebaseStorage.instance.ref().child(path);
+    // final uploadTask = ref.putFile(file);
+    // // String imageUrl = await ref.getDownloadURL();
+    // final snapshot = await uploadTask.whenComplete(() {});
+    // final urlDownload = await snapshot.ref.getDownloadURL();
+    // simpanDownloadUrl.url = urlDownload;
+    // print(imageUrl);
   }
 
-  Future uploadFile() async {
-    if (_photo == null) return;
-    final fileName = p.basename(_photo!.path);
-    final destination = 'files/$fileName';
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
 
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!);
-    } catch (e) {
-      print('error occured');
-    }
+    setState(() {
+      pickedFile = result.files.first;
+    });
   }
 
   @override
@@ -59,7 +89,6 @@ class _AddPotonganState extends State<AddPotongan> {
     final ImagePicker imagePicker = ImagePicker();
     final _formKey = GlobalKey<FormState>();
     BarbermanModel barbermanModel = BarbermanModel();
-    String imagePath = 'null';
 
     return Scaffold(
       appBar: AppBar(
@@ -82,7 +111,7 @@ class _AddPotonganState extends State<AddPotongan> {
             child: Container(
               padding: const EdgeInsets.only(bottom: 30),
               child: const Text(
-                "Add Model",
+                "Tambah Model",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
               ),
             ),
@@ -91,13 +120,13 @@ class _AddPotonganState extends State<AddPotongan> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Stack(
-                // alignment: Alignment.center,
+                alignment: Alignment.center,
                 children: [
-                  (_photo != null)
+                  (pickedFile != null)
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(50),
                           child: Image.file(
-                            _photo!,
+                            File(pickedFile!.path!),
                             width: 100,
                             height: 100,
                             fit: BoxFit.fitHeight,
@@ -112,21 +141,17 @@ class _AddPotonganState extends State<AddPotongan> {
                           child: IconButton(
                             splashColor: Colors.white,
                             splashRadius: 5,
-                            onPressed: () {
-                              imgFromGallery();
-                            },
+                            onPressed: selectFile,
                             icon: Icon(Icons.add_a_photo_rounded),
                             color: Colors.black,
                           ),
                         ),
                   // Positioned(
-                  //   top: 20,
+                  //   top: 50,
                   //   child: IconButton(
                   //     splashColor: Colors.white,
                   //     splashRadius: 5,
-                  //     onPressed: () {
-                  //       print('object');
-                  //     },
+                  //     onPressed: selectFile,
                   //     icon: Icon(Icons.add_a_photo_rounded),
                   //     color: Colors.black,
                   //   ),
@@ -192,9 +217,21 @@ class _AddPotonganState extends State<AddPotongan> {
                 backgroundColor: const Color(0xff20639B),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    final path = 'potongans/' + _idController.text;
+                    final file = File(pickedFile!.path!);
+                    final ref = firebase_storage.FirebaseStorage.instance
+                        .ref()
+                        .child(path);
+                    final uploadTask = ref.putFile(file);
+                    // String imageUrl = await ref.getDownloadURL();
+                    final snapshot = await uploadTask.whenComplete(() {});
+                    final urlDownload = await snapshot.ref.getDownloadURL();
+                    simpanDownloadUrl.url = urlDownload;
+                    print(simpanDownloadUrl.url);
+
                     final message = await barbermanModel.createModelRambut(
                         idnama: _idController.text,
-                        photoUrl: 'https://reqres.in/img/faces/2-image.jpg',
+                        photoUrl: urlDownload,
                         namaPotongan: _namaController.text,
                         hargaPotongan: _hargaController.text);
 
@@ -215,7 +252,7 @@ class _AddPotonganState extends State<AddPotongan> {
                     }
                   }
                 },
-                label: const Text("add"),
+                label: const Text("Tambah"),
               ),
             ],
           ),

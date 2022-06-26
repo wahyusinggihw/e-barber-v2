@@ -35,7 +35,14 @@ class simpanDataBarbers {
 }
 
 class simpanDataOrder {
-  static late String namaPotongan, harga, namaPelanggan, uid, id, alamat, nohp;
+  static late String namaPotongan,
+      harga,
+      namaPelanggan,
+      uid,
+      id,
+      alamat,
+      nohp,
+      photoUrl;
 }
 
 class authValidation {
@@ -44,6 +51,10 @@ class authValidation {
 
 class simpanBiography {
   static late String email = '', nama, nohp;
+}
+
+class simpanDownloadUrl {
+  static late String url;
 }
 
 class ScreenArguments {
