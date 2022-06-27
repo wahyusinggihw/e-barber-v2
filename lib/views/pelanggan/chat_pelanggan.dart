@@ -12,10 +12,16 @@ class _ChatPelangganState extends State<ChatPelanggan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 40,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        // foregroundColor: Colors.white,
+      ),
       body: Center(
         child: ListView(
-          padding:
-              const EdgeInsets.only(left: 50, right: 50, top: 25, bottom: 25),
+          padding: const EdgeInsets.only(left: 50, right: 50, bottom: 25),
           children: <Widget>[
             Center(
               child: Column(

@@ -41,7 +41,7 @@ class _RegisterState extends State<Register> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return "Nama Wajib diisi";
+          return "Nama wajib diisi";
         } else {
           // formData.email = value;
           return null;
@@ -78,8 +78,8 @@ class _RegisterState extends State<Register> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return null;
-          // return "Nama belakang wajib diisi";
+          // return null;
+          return "Alamat wajib diisi";
         } else {
           // formData.email = value;
           return null;
@@ -97,8 +97,8 @@ class _RegisterState extends State<Register> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
+          return "Nomor handphone wajib diisi";
           return null;
-          // return "Nama belakang wajib diisi";
         } else {
           // formData.email = value;
           return null;
@@ -118,7 +118,7 @@ class _RegisterState extends State<Register> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return "Email Wajib diisi";
+          return "Email wajib diisi";
         } else {
           // formData.email = value;
           return null;
@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return "Password Wajib diisi";
+          return "Password wajib diisi";
         } else if (value.length < 8) {
           return "Password harus lebih dari 8 huruf";
         } else {
@@ -309,6 +309,7 @@ class _RegisterState extends State<Register> {
                         } else {
                           // print(message);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.red,
                             content: Text(message),
                           ));
                         }

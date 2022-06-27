@@ -16,9 +16,16 @@ class _BerandaPelangganState extends State<BerandaPelanggan> {
   Widget build(BuildContext context) {
     UserModel getSaldo = UserModel();
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 40,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        // foregroundColor: Colors.white,
+      ),
       body: Center(
         child: ListView(
-          padding: const EdgeInsets.only(left: 50, right: 50, top: 25),
+          padding: const EdgeInsets.only(left: 50, right: 50),
           children: <Widget>[
             Center(
               child: Column(

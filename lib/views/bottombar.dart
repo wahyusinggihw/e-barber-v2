@@ -1,12 +1,10 @@
 import 'package:e_barber_v2/views/barberman/beranda_barberman.dart';
 import 'package:e_barber_v2/views/barberman/chat_barberman.dart';
-import 'package:e_barber_v2/views/barberman/dompet_barberman.dart';
 import 'package:e_barber_v2/views/barberman/listpotongan_barberman.dart';
 import 'package:e_barber_v2/views/barberman/order_barberman.dart';
 import 'package:e_barber_v2/views/barberman/user_barberman.dart';
 import 'package:e_barber_v2/views/pelanggan/beranda_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/chat_pelanggan.dart';
-import 'package:e_barber_v2/views/pelanggan/dompet_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/statusorder_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/listbarber_pelanggan.dart';
 import 'package:e_barber_v2/views/pelanggan/user_pelanggan.dart';
@@ -91,7 +89,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth _auth = FirebaseAuth.instance;
-    var currentUserRole = UserRole();
+    UserRole currentUserRole = UserRole();
 
     Future<String> data2() async {
       var data1 = (await FirebaseFirestore.instance

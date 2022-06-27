@@ -128,6 +128,8 @@ class AuthService with ChangeNotifier {
         return 'Password lemah.';
       } else if (e.code == 'email-already-in-use') {
         return 'Email sudah digunakan.';
+      } else if (e.code == 'invalid-email') {
+        return 'Email tidak valid.';
       } else {
         return e.message;
       }

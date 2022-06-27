@@ -7,6 +7,12 @@ class UserModel {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference order =
       FirebaseFirestore.instance.collection('order');
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
+  final CollectionReference barber =
+      FirebaseFirestore.instance.collection('barbers');
+  final CollectionReference pelanggan =
+      FirebaseFirestore.instance.collection('pelanggans');
 
   // final uid = FirebaseFirestore.instance
   //     .collection('collection')
@@ -21,6 +27,46 @@ class UserModel {
         .toString();
 
     return data1;
+  }
+
+  Future<String?> updateUserPelanggan({
+    required String roleId,
+    photoUrl,
+    namaToko,
+  }) async {
+    try {
+      users.doc(_auth.currentUser!.uid).update({
+        'photo_url': photoUrl,
+      });
+      pelanggan.doc(_auth.currentUser!.uid).update({
+        'photo_url': photoUrl,
+      });
+      return 'Success';
+    } catch (e) {
+      print(e);
+      return e.toString();
+    }
+  }
+
+  Future<String?> updateUserBarber({
+    required String roleId,
+    photoUrl,
+    namaToko,
+  }) async {
+    try {
+      users.doc(_auth.currentUser!.uid).update({
+        'nama_toko': namaToko,
+        'photo_url': photoUrl,
+      });
+      barber.doc(_auth.currentUser!.uid).update({
+        'nama_toko': namaToko,
+        'photo_url': photoUrl,
+      });
+      return 'Success';
+    } catch (e) {
+      print(e);
+      return e.toString();
+    }
   }
 
   Future<String?> createOrder({

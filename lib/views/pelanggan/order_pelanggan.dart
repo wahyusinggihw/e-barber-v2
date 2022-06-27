@@ -41,6 +41,7 @@ class _OrderPelangganState extends State<OrderPelanggan> {
         elevation: 0,
         backgroundColor: Colors.white10,
         leading: IconButton(
+          splashRadius: 25,
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
@@ -54,7 +55,7 @@ class _OrderPelangganState extends State<OrderPelanggan> {
           children: [
             Center(
               child: Container(
-                padding: const EdgeInsets.only(bottom: 30, top: 25),
+                padding: const EdgeInsets.only(bottom: 30),
                 child: const Text(
                   "Order",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
@@ -164,6 +165,7 @@ class _OrderPelangganState extends State<OrderPelanggan> {
                           hargaPotongan: simpanDataOrder.harga,
                           idnama: simpanDataOrder.id,
                           namaPotongan: simpanDataOrder.namaPotongan,
+                          photoUrl: simpanDataOrder.photoUrl,
                         );
 
                         if (message!.contains('Success')) {

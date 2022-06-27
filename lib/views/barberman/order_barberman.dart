@@ -29,10 +29,17 @@ class _OrderBarbermanState extends State<OrderBarberman> {
     UserModel updateStatus = UserModel();
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 40,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        // foregroundColor: Colors.white,
+      ),
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(bottom: 30, top: 25),
+            padding: const EdgeInsets.only(bottom: 30),
             child: const Text(
               "Daftar Pesanan",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
@@ -67,7 +74,7 @@ class _OrderBarbermanState extends State<OrderBarberman> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                        'https://reqres.in/img/faces/2-image.jpg'),
+                                        documentSnapshot['photo_url']),
                                     fit: BoxFit.fill,
                                   ),
                                   shape: BoxShape.circle,

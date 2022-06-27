@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:e_barber_v2/models/barberman_model.dart';
 import 'package:e_barber_v2/models/models.dart';
 import 'package:flutter/material.dart';
 import '../../provider/barberman_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 class DetailPotongan extends StatefulWidget {
   const DetailPotongan({Key? key}) : super(key: key);
@@ -17,6 +19,18 @@ class _DetailPotonganState extends State<DetailPotongan> {
   final TextEditingController _photoUrlController = TextEditingController();
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
+
+  PlatformFile? pickedFile;
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -29,6 +43,7 @@ class _DetailPotonganState extends State<DetailPotongan> {
         elevation: 0,
         backgroundColor: Colors.white10,
         leading: IconButton(
+          splashRadius: 25,
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
@@ -160,7 +175,7 @@ class _DetailPotonganState extends State<DetailPotongan> {
                         idnama: simpanDataPotongan.id,
                         namaPotongan: simpanDataPotongan.nama,
                         hargaPotongan: simpanDataPotongan.harga,
-                        photoUrl: '');
+                        photoUrl: simpanDataPotongan.photoUrl);
                     //   final message = await barbermanModel.createModelRambut(
                     //       photoUrl: 'https://reqres.in/img/faces/2-image.jpg',
                     //       namaPotongan: _namaController.text,

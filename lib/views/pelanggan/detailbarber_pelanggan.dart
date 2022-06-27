@@ -37,6 +37,7 @@ class _DetailBarberState extends State<DetailBarber> {
         elevation: 0,
         backgroundColor: Colors.white10,
         leading: IconButton(
+          splashRadius: 25,
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
@@ -48,7 +49,7 @@ class _DetailBarberState extends State<DetailBarber> {
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(bottom: 30, top: 25),
+            padding: const EdgeInsets.only(bottom: 30),
             child: Text(
               simpanDataBarbers.firstname + " " + simpanDataBarbers.lastname,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),

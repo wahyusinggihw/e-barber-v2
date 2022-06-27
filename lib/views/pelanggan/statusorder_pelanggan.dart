@@ -34,12 +34,19 @@ class _StatusOrderPelangganState extends State<StatusOrderPelanggan> {
     // Widget bottomNavBar = BottomBar();
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 40,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        // foregroundColor: Colors.white,
+      ),
       body: Center(
         child: Column(
           children: [
             Center(
               child: Container(
-                padding: const EdgeInsets.only(bottom: 30, top: 25),
+                padding: const EdgeInsets.only(bottom: 30),
                 child: const Text(
                   "Status Order",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
@@ -79,7 +86,8 @@ class _StatusOrderPelangganState extends State<StatusOrderPelanggan> {
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: NetworkImage(
-                                                  'https://reqres.in/img/faces/2-image.jpg'),
+                                                  documentSnapshot[
+                                                      'photo_url']),
                                               fit: BoxFit.cover,
                                             ),
                                             shape: BoxShape.circle,

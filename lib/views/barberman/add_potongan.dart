@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:e_barber_v2/models/barberman_model.dart';
 import 'package:e_barber_v2/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as p;
@@ -61,16 +61,16 @@ class _AddPotonganState extends State<AddPotongan> {
 
   ////WORK
   // Future uploadFile() async {
-  //   // final path = 'potongans/' + _idController.text;
-  //   // final file = File(pickedFile!.path!);
-  //   // final ref = firebase_storage.FirebaseStorage.instance.ref().child(path);
-  //   // final uploadTask = ref.putFile(file);
-  //   // // String imageUrl = await ref.getDownloadURL();
-  //   // final snapshot = await uploadTask.whenComplete(() {});
-  //   // final urlDownload = await snapshot.ref.getDownloadURL();
-  //   // simpanDownloadUrl.url = urlDownload;
-  //   // print(imageUrl);
+  //   final path = 'potongans/' + _idController.text;
+  //   final file = File(pickedFile!.path!);
+  //   final ref = firebase_storage.FirebaseStorage.instance.ref().child(path);
+  //   final uploadTask = ref.putFile(file);
+  //   // String imageUrl = await ref.getDownloadURL();
+  //   final snapshot = await uploadTask.whenComplete(() {});
+  //   final urlDownload = await snapshot.ref.getDownloadURL();
+  //   simpanDownloadUrl.url = urlDownload;
   // }
+
   PlatformFile? pickedFile;
 
   Future selectFile() async {
@@ -85,7 +85,7 @@ class _AddPotonganState extends State<AddPotongan> {
   @override
   Widget build(BuildContext context) {
     // final dataProvider = Provider.of<ModelRambut>(context, listen: false);
-    final ImagePicker imagePicker = ImagePicker();
+    // final ImagePicker imagePicker = ImagePicker();
     final _formKey = GlobalKey<FormState>();
     BarbermanModel barbermanModel = BarbermanModel();
 
@@ -94,6 +94,7 @@ class _AddPotonganState extends State<AddPotongan> {
         elevation: 0,
         backgroundColor: Colors.white10,
         leading: IconButton(
+          splashRadius: 25,
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {

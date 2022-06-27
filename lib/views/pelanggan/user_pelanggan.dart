@@ -17,16 +17,16 @@ class UserPelanggan extends StatefulWidget {
 }
 
 class _UserPelangganState extends State<UserPelanggan> {
-  PlatformFile? pickedFile;
+  // PlatformFile? pickedFile;
 
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
+  // Future selectFile() async {
+  //   final result = await FilePicker.platform.pickFiles();
+  //   if (result == null) return;
 
-    setState(() {
-      pickedFile = result.files.first;
-    });
-  }
+  //   setState(() {
+  //     pickedFile = result.files.first;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +49,28 @@ class _UserPelangganState extends State<UserPelanggan> {
     return ChangeNotifierProvider(
       create: (context) => AuthService(),
       child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 40,
+          actions: [
+            IconButton(
+              splashRadius: 18,
+              icon: Icon(
+                Icons.settings,
+                color: Color(0xff20639B),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/setting-pelanggan');
+                // do something
+              },
+            ),
+          ],
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          // foregroundColor: Colors.white,
+        ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 50, right: 50, top: 25),
+          padding: const EdgeInsets.only(left: 50, right: 50),
           child: Column(
             // padding: const EdgeInsets.only(left: 50, right: 50, top: 25),
             children: <Widget>[
@@ -61,42 +81,73 @@ class _UserPelangganState extends State<UserPelanggan> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                 ),
               ),
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-                child: Container(
-                  height: 150,
-                  width: 500,
-                  color: Color(0xff6d8ea1),
-                  child: pickedFile != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.file(
-                            File(pickedFile!.path!),
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.fitHeight,
-                          ),
-                        )
-                      : Container(
-                          width: 100,
-                          height: 100,
-                          child: IconButton(
-                            onPressed: selectFile,
-                            icon: Icon(Icons.add_a_photo_rounded),
-                            color: Colors.black,
+              FutureBuilder(
+                future:
+                    getUser.getUser(field: 'photo_url', collection: 'users'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      child: Container(
+                        height: 150,
+                        width: 500,
+                        color: Color(0xff6d8ea1),
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Container(
+                            height: 120.0,
+                            width: 120.0,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(snapshot.data.toString()),
+                                fit: BoxFit.cover,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
                           ),
                         ),
-                ),
-                // child: SizedBox(
-                //   height: 150,
-                //   width: 500,
-                //   child: Image.asset(
-                //     'assets/images/beranda.png',
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
+                      ),
+                      // child: SizedBox(
+                      //   height: 150,
+                      //   width: 500,
+                      //   child: Image.asset(
+                      //     'assets/images/beranda.png',
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
+                    );
+                  } else {
+                    return ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      child: Container(
+                        height: 150,
+                        width: 500,
+                        color: Color(0xff6d8ea1),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            // onPressed: selectFile,
+                            Icons.camera_alt_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      // child: SizedBox(
+                      //   height: 150,
+                      //   width: 500,
+                      //   child: Image.asset(
+                      //     'assets/images/beranda.png',
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
+                    );
+                  }
+                },
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -135,10 +186,11 @@ class _UserPelangganState extends State<UserPelanggan> {
                   },
                   child: Text("Logout",
                       style: TextStyle(
+                          color: Color(0xff20639B),
                           fontSize: 14,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.bold,
                           // wordSpacing: 10,
-                          height: 2)),
+                          height: 5)),
                 ),
               ),
             ],

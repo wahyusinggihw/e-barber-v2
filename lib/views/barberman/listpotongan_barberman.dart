@@ -30,6 +30,13 @@ class _ListPotonganState extends State<ListPotongan> {
 //   }
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 40,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        // foregroundColor: Colors.white,
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
@@ -42,7 +49,7 @@ class _ListPotonganState extends State<ListPotongan> {
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(bottom: 30, top: 25),
+            padding: const EdgeInsets.only(bottom: 30),
             child: const Text(
               "Daftar Model",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
