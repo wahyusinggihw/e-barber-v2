@@ -74,15 +74,17 @@ class BarbermanModel {
     }
   }
 
-  Future<String?> deleteModelRambut({
-    required String idnama,
-  }) async {
+  Future<String?> deleteModelRambut({required String idnama, pathFoto}) async {
     try {
       modelrambut
           .doc(_auth.currentUser!.uid)
           .collection('potongans')
           .doc(idnama)
           .delete();
+
+      final ref = storage.ref().child('potongans/' + pathFoto);
+      await ref.delete();
+
       return 'Success';
     } on FirebaseAuthException catch (e) {
       return e.toString();

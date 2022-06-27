@@ -59,20 +59,19 @@ class _AddPotonganState extends State<AddPotongan> {
   //   }
   // }
 
-  PlatformFile? pickedFile;
-
   ////WORK
-  Future uploadFile() async {
-    // final path = 'potongans/' + _idController.text;
-    // final file = File(pickedFile!.path!);
-    // final ref = firebase_storage.FirebaseStorage.instance.ref().child(path);
-    // final uploadTask = ref.putFile(file);
-    // // String imageUrl = await ref.getDownloadURL();
-    // final snapshot = await uploadTask.whenComplete(() {});
-    // final urlDownload = await snapshot.ref.getDownloadURL();
-    // simpanDownloadUrl.url = urlDownload;
-    // print(imageUrl);
-  }
+  // Future uploadFile() async {
+  //   // final path = 'potongans/' + _idController.text;
+  //   // final file = File(pickedFile!.path!);
+  //   // final ref = firebase_storage.FirebaseStorage.instance.ref().child(path);
+  //   // final uploadTask = ref.putFile(file);
+  //   // // String imageUrl = await ref.getDownloadURL();
+  //   // final snapshot = await uploadTask.whenComplete(() {});
+  //   // final urlDownload = await snapshot.ref.getDownloadURL();
+  //   // simpanDownloadUrl.url = urlDownload;
+  //   // print(imageUrl);
+  // }
+  PlatformFile? pickedFile;
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
@@ -217,36 +216,45 @@ class _AddPotonganState extends State<AddPotongan> {
                 backgroundColor: const Color(0xff20639B),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    final path = 'potongans/' + _idController.text;
-                    final file = File(pickedFile!.path!);
-                    final ref = firebase_storage.FirebaseStorage.instance
-                        .ref()
-                        .child(path);
-                    final uploadTask = ref.putFile(file);
-                    // String imageUrl = await ref.getDownloadURL();
-                    final snapshot = await uploadTask.whenComplete(() {});
-                    final urlDownload = await snapshot.ref.getDownloadURL();
-                    simpanDownloadUrl.url = urlDownload;
-                    print(simpanDownloadUrl.url);
+                    if (pickedFile != null) {
+                      final path = 'potongans/' + _idController.text;
+                      final file = File(pickedFile!.path!);
+                      final ref = firebase_storage.FirebaseStorage.instance
+                          .ref()
+                          .child(path);
+                      final uploadTask = ref.putFile(file);
+                      // String imageUrl = await ref.getDownloadURL();
+                      final snapshot = await uploadTask.whenComplete(() {});
+                      final urlDownload = await snapshot.ref.getDownloadURL();
+                      simpanDownloadUrl.url = urlDownload;
+                      print(simpanDownloadUrl.url);
 
-                    final message = await barbermanModel.createModelRambut(
-                        idnama: _idController.text,
-                        photoUrl: urlDownload,
-                        namaPotongan: _namaController.text,
-                        hargaPotongan: _hargaController.text);
+                      final message = await barbermanModel.createModelRambut(
+                          idnama: _idController.text,
+                          photoUrl: urlDownload,
+                          namaPotongan: _namaController.text,
+                          hargaPotongan: _hargaController.text);
 
-                    if (message!.contains('Success')) {
-                      print('success');
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.blue,
-                        content: Text('Data berhasil ditambah'),
-                      ));
-                      Navigator.pop(context);
+                      if (message!.contains('Success')) {
+                        print('success');
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.blue,
+                          content: Text('Data berhasil ditambah'),
+                        ));
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(message),
+                          ),
+                        );
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.red,
-                          content: Text(message),
+                          content: Text('Foto wajib diisi'),
                         ),
                       );
                     }

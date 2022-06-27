@@ -49,6 +49,8 @@ class AuthService with ChangeNotifier {
           db.collection('users').doc(cred.user?.uid).set({
             'uid': cred.user?.uid,
             'role': roleId,
+            'photo_url': '',
+            'email': email,
             'first_name': firstName,
             'last_name': lastName,
             'alamat': alamat,
@@ -57,6 +59,8 @@ class AuthService with ChangeNotifier {
           db.collection('pelanggans').doc(cred.user?.uid).set({
             'uid': cred.user?.uid,
             'role': roleId,
+            'photo_url': '',
+            'email': email,
             'first_name': firstName,
             'last_name': lastName,
             'alamat': alamat,
@@ -76,6 +80,9 @@ class AuthService with ChangeNotifier {
           db.collection('users').doc(cred.user?.uid).set({
             'uid': cred.user?.uid,
             'role': roleId,
+            'photo_url': '',
+            'email': email,
+            'nama_toko': '',
             'first_name': firstName,
             'last_name': lastName,
             'alamat': alamat,
@@ -84,6 +91,9 @@ class AuthService with ChangeNotifier {
           db.collection('barbers').doc(cred.user?.uid).set({
             'uid': cred.user?.uid,
             'role': roleId,
+            'photo_url': '',
+            'email': email,
+            'nama_toko': '',
             'first_name': firstName,
             'last_name': lastName,
             'alamat': alamat,

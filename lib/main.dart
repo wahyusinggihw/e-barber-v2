@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final time = Timestamp.now();
+    // final time = Timestamp.now();
     FirebaseAuth.instance;
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),

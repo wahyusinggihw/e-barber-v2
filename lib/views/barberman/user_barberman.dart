@@ -47,7 +47,7 @@ class _UserBarbermanState extends State<UserBarberman> {
               Container(
                 padding: const EdgeInsets.only(bottom: 30),
                 child: const Text(
-                  "Profil | Pelanggan",
+                  "Profil | Barberman",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                 ),
               ),

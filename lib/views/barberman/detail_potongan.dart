@@ -43,7 +43,7 @@ class _DetailPotonganState extends State<DetailPotongan> {
         ),
         onPressed: () async {
           final message = await barbermanModel.deleteModelRambut(
-              idnama: simpanDataPotongan.id);
+              idnama: simpanDataPotongan.id, pathFoto: simpanDataPotongan.id);
           if (message!.contains('Success')) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

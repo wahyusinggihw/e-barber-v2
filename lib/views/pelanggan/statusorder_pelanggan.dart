@@ -80,7 +80,7 @@ class _StatusOrderPelangganState extends State<StatusOrderPelanggan> {
                                             image: DecorationImage(
                                               image: NetworkImage(
                                                   'https://reqres.in/img/faces/2-image.jpg'),
-                                              fit: BoxFit.fill,
+                                              fit: BoxFit.cover,
                                             ),
                                             shape: BoxShape.circle,
                                           ),

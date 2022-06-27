@@ -1,7 +1,7 @@
 // import 'package:e_barber/barberman/bottombar_barberman.dart';
-import 'dart:math';
-
+import 'dart:io';
 import 'package:e_barber_v2/models/models.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/provider/auth_provider.dart';
@@ -17,6 +17,17 @@ class UserPelanggan extends StatefulWidget {
 }
 
 class _UserPelangganState extends State<UserPelanggan> {
+  PlatformFile? pickedFile;
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     UserModel getUser = UserModel();
@@ -54,14 +65,38 @@ class _UserPelangganState extends State<UserPelanggan> {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
-                child: SizedBox(
+                child: Container(
                   height: 150,
                   width: 500,
-                  child: Image.asset(
-                    'assets/images/beranda.png',
-                    fit: BoxFit.cover,
-                  ),
+                  color: Color(0xff6d8ea1),
+                  child: pickedFile != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            File(pickedFile!.path!),
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : Container(
+                          width: 100,
+                          height: 100,
+                          child: IconButton(
+                            onPressed: selectFile,
+                            icon: Icon(Icons.add_a_photo_rounded),
+                            color: Colors.black,
+                          ),
+                        ),
                 ),
+                // child: SizedBox(
+                //   height: 150,
+                //   width: 500,
+                //   child: Image.asset(
+                //     'assets/images/beranda.png',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
