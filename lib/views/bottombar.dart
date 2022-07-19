@@ -72,11 +72,11 @@ class _BottomBarState extends State<BottomBar> {
             backgroundColor: Color(0xff20639B)),
         BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),
-            label: "Order",
+            label: "Barber",
             backgroundColor: Color(0xff20639B)),
         BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet_outlined),
-            label: "Dompet",
+            label: "Order",
             backgroundColor: Color(0xff20639B)),
         BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
